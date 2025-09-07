@@ -604,7 +604,7 @@ section[id="1"] .vicetext strong { font-weight: 700; }
  
 .vicemaintext {
   font-size: 15.5px;
-  font-style: Regular;
+  font-weight: 400;
   font-family: var(--font-nunito);
   font-weight: 400;
   line-height: normal;
@@ -614,7 +614,7 @@ section[id="1"] .vicetext strong { font-weight: 700; }
  
 .quikanchor {
   font-size: 15px;
-  font-style: Regular;
+  font-weight: 400;
   font-family: var(--font-nunito);
   font-weight: 400;
   line-height: normal;
@@ -624,7 +624,7 @@ section[id="1"] .vicetext strong { font-weight: 700; }
  
 .zagolovok {
   font-size: 17px;
-  font-style: Medium;
+  font-weight: 500;
   font-family: var(--font-nunito);
   font-weight: 500;
   line-height: normal;
@@ -637,14 +637,14 @@ section[id="1"] .vicetext strong { font-weight: 700; }
   font-family: var(--font-nunito);
   font-weight: 500;
   line-height: 2;
-  letter-spacing: 0.5;
+  letter-spacing: 0.5px;
   text-transform: none;
   text-decoration: none;
 }
  
 .maintext {
   font-size: 18px;
-  font-style: Regular;
+  font-weight: 400;
   font-family: var(--font-nunito);
   font-weight: 400;
   line-height: normal;

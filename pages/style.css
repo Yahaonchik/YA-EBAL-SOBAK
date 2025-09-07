@@ -173,7 +173,7 @@
 }
 
 .nunitoitalic {
- font-size: 16;
+ font-size: 16px;
  font-family: var(--font-nunito);
  font-weight: 300;
  line-height: normal;

@@ -82,10 +82,10 @@ const MainFooter = () => {
             </div>
             <div className="frame1196-container234">
               <p className="frame1196-text284">
-                <span className="frame1196-text-bold">Адрес:</span> пл. Независимости, 1, Одесса, Одесская область, 65000
+                <span className="frame1196-text-bold">Адрес:</span> пл. Независимости, 32, Одесса, Одесская область, 65000
               </p>
               <p className="frame1196-text285">
-                <span className="frame1196-text-bold">E-mail:</span> remstirmash@gmail.com
+                <span className="frame1196-text-bold">E-mail:</span> yahaonchik@gmail.com
               </p>
             </div>
             <p className="frame1196-text286">
@@ -181,7 +181,7 @@ const MainFooter = () => {
             width: 100%;
             height: 100%;
             display: flex;
-            max-width: auto;
+            max-width: none;
             min-width: auto;
             align-self: center;
             max-height: 500px;
@@ -304,7 +304,7 @@ const MainFooter = () => {
             height: 100%;
             display: flex;
             align-self: flex-start;
-            max-height: auto;
+            max-height: none;
             min-height: auto;
             flex-direction: column;
           }
@@ -516,7 +516,7 @@ const MainFooter = () => {
             .frame1196-container236 {
               width: auto;
               height: auto;
-              max-width: auto;
+              max-width: none;
               min-height: auto;
             }
           }

@@ -18,7 +18,7 @@ import AskButton from '../components/AskButton'
     import SEOHead from '../components/SEOHead'
     import Breadcrumbs from '../components/Breadcrumbs'
     import { getSEOData } from '../utils/seoConfig'
-    import { getMainPageStructuredData } from '../utils/structuredData'
+    import { getMainPageStructuredData, getFAQData } from '../utils/structuredData'
     import InlineCTA from '../components/InlineCTA'
 
 const Frame1196 = (props) => {
@@ -41,6 +41,13 @@ const Frame1196 = (props) => {
   const itogiRef = React.useRef(null)
   const [showReviews, setShowReviews] = useState(false)
   const reviewsRef = React.useRef(null)
+  // Banner form state
+  const [discountPhone, setDiscountPhone] = useState('')
+  const [discountStatus, setDiscountStatus] = useState('')
+  const [discountSending, setDiscountSending] = useState(false)
+  const [discountHoneypot, setDiscountHoneypot] = useState('')
+  // Kyiv time window
+  const [kyivRange, setKyivRange] = useState({ start: 0, end: 0 })
   const router = useRouter()
 
   // Проверяем, является ли текущая страница страницей проблемы
@@ -202,9 +209,71 @@ const Frame1196 = (props) => {
     return () => io.disconnect()
   }, [showReviews])
 
+  // Determine current 2-hour window by Kyiv time
+  useEffect(() => {
+    const update = () => {
+      try {
+        const now = new Date()
+        const hourStr = new Intl.DateTimeFormat('ru-UA', { timeZone: 'Europe/Kyiv', hour: 'numeric' }).format(now)
+        const h = parseInt(hourStr, 10)
+        if (!isNaN(h)) setKyivRange({ start: h, end: (h + 2) % 24 })
+      } catch {}
+    }
+    update()
+    const id = setInterval(update, 60000)
+    return () => clearInterval(id)
+  }, [])
+
+  const pad2 = (n) => String(n).padStart(2, '0')
+  const formatTime = (h) => `${pad2(h)}.00`
+
+  const formatUaPhoneInline = (input) => {
+    const digits = (input || '').replace(/\D/g, '')
+    let rest = digits
+    if (rest.startsWith('380')) rest = rest.slice(3)
+    else if (rest.startsWith('80')) rest = rest.slice(2)
+    else if (rest.startsWith('0')) rest = rest.slice(1)
+    return rest.slice(0, 9)
+  }
+  const handleDiscountPhoneChange = (e) => {
+    setDiscountPhone(formatUaPhoneInline(e.target.value))
+  }
+  const handleDiscountSubmit = async (e) => {
+    if (e) e.preventDefault()
+    if (discountSending) return
+    const rest = (discountPhone || '').replace(/\D/g, '')
+    if (rest.length !== 9) { setDiscountStatus('Введите номер в формате +380XXXXXXXXX'); return }
+    const fullPhone = `+380 ${rest}`
+    try {
+      setDiscountSending(true)
+      setDiscountStatus('Отправка...')
+      const msg = `Заявка со скидкой 10% (баннер). Время: с ${formatTime(kyivRange.start)} до ${formatTime(kyivRange.end)}`
+      const res = await fetch('/api/send-notify', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: '', phone: fullPhone, msg, honeypot: discountHoneypot })
+      })
+      const raw = await res.text(); let data = null; try { data = raw ? JSON.parse(raw) : null } catch {}
+      if (!res.ok) throw new Error((data && data.error) || raw || 'Ошибка')
+      setDiscountStatus('Заявка принята. Перезвоним в течение 10–15 минут.')
+      setDiscountPhone('')
+      setTimeout(() => setDiscountStatus(''), 4000)
+    } catch (err) {
+      setDiscountStatus('Ошибка: ' + err.message)
+    } finally {
+      setDiscountSending(false)
+    }
+  }
+
   const seoData = getSEOData('/')
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://remont-stiralok.vercel.app'
-  const structuredData = getMainPageStructuredData(baseUrl)
+  const faqItems = [
+    { question: 'Сколько времени занимает ремонт?', answer: '99% поломок устраняем на месте за 30–60 минут. Редкие случаи требуют заказа деталей и повторного визита 1–2 дня.' },
+    { question: 'Какую гарантию вы предоставляете?', answer: 'На все виды работ — 6 месяцев, на заменённые запчасти — 1 год. Гарантийный талон выдаём после ремонта.' },
+    { question: 'Сколько стоит диагностика?', answer: 'Диагностика — 200 грн. При согласии на ремонт эта сумма входит в стоимость работ. Выезд мастера бесплатный.' },
+    { question: 'Будет ли у мастера нужные детали?', answer: 'Мастер возит базовый набор популярных запчастей. Редкие детали заказываем за 1–2 дня, согласовываем по телефону.' },
+    { question: 'Дешевле отремонтировать или заменить?', answer: 'Если стоимость ремонта превышает 60% цены новой машины, выгоднее заменить. Мы честно консультируем по целесообразности.' }
+  ]
+  const structuredData = [...getMainPageStructuredData(baseUrl), getFAQData(faqItems)]
 
   return (
     <>
@@ -294,7 +363,7 @@ const Frame1196 = (props) => {
             <Link legacyBehavior href="/silnoshumit">
               <a className="frame1196-container116">
                 <p className="frame1196-text115">
-                  Стиррльная машина шумит при отжиме
+                  Стиральная машина шумит при отжиме
                 </p>
                 <div className="frame1196-arrow13">
                   <svg
@@ -1891,7 +1960,7 @@ const Frame1196 = (props) => {
                     <h3 className="frame1196-text218">
                       <span
                         dangerouslySetInnerHTML={{
-                          __html: 'Современное оборудованиее по диаагностике',
+                          __html: 'Современное оборудование по диаагностике',
                         }}
                       ></span>
                     </h3>
@@ -2799,6 +2868,41 @@ const Frame1196 = (props) => {
             </div>
           </div>
         </section>
+        <section className="kyiv-discount-wrapper">
+          <div className="kyiv-discount-inner">
+            <div className="kyiv-discount-content">
+              <div className="kyiv-discount-heading">
+                <h2 className="kyiv-discount-title">Скидка 10% на ремонт</h2>
+                <p className="kyiv-discount-time">с {formatTime(kyivRange.start)} до {formatTime(kyivRange.end)}</p>
+              </div>
+              <p className="kyiv-discount-sub">Перезвоним в течение 3 минут</p>
+              <form className="kyiv-discount-form" onSubmit={handleDiscountSubmit}>
+                <div className="kyiv-phone-group">
+                  <span className="kyiv-phone-prefix">+380</span>
+                  <input
+                    type="tel"
+                    inputMode="numeric"
+                    autoComplete="tel"
+                    pattern="\d{9}"
+                    maxLength={9}
+                    className="kyiv-phone-input"
+                    placeholder="Номер телефона"
+                    value={discountPhone}
+                    onChange={handleDiscountPhoneChange}
+                    required
+                  />
+                </div>
+                <input className="kyiv-honeypot" tabIndex="-1" autoComplete="off" value={discountHoneypot} onChange={(e)=>setDiscountHoneypot(e.target.value)} />
+                <button type="submit" className="kyiv-banner-btn">Заказать мастера</button>
+                <div className="kyiv-status">{discountStatus}</div>
+              </form>
+            </div>
+            <div className="kyiv-discount-figure" aria-hidden="true">
+              <img className="kyiv-discount-img" src="/problems/master.webp" alt="Мастер" loading="lazy" />
+            </div>
+          </div>
+        </section>
+
         <div className="frame1196-container183">
           <h2 className="frame1196-text228">
             <span>Наши работы</span>
@@ -3457,7 +3561,7 @@ const Frame1196 = (props) => {
             </span>
           </div>
           <p className="frame1196-text251 textITOGI">
-              <span>Стиральная машина — это техника, которая должна работать исправно: отжимать, стирать и радовать стабильностью. Но на практике даже самая надёжная техника со временем требует внимания. Механические детали изнашиваются, электроника даёт сбои, а бытовая нагрузка делает своё дело. Вот почему ремонт стиральных машин в Одессе — это не просто разовая услуга, а реальная необходимость для большинства владельцев. Важно доверить ремонт проверенным специалистам, а не случайному мастеру.</span>
+              <span>Стиральная машина — это техника, которая должна работать исправно: отжимать, стирать и радовать стабильностью. Но на практике даже самая надёжная техника со временем требует внимания. Механические детали изнашиваются, электроника даёт сбои, а бытовая нагрузка делает своё дело. Вот почему ремонт стиральных машин в Одессе — это не просто разовая услуга, а реальная необходимость для большинства владельцев. Важно доверить ремонт проверенным специалистом, а не случайному пьяному мастеру.</span>
           </p>
           <p className="frame1196-text252 textITOGI">
               <span>Под брендом "Ваше Название" работает команда мастеров, каждый из которых занимается ремонтом стиральных машин более семи лет. Мы обучались у лучших, прошли сертификацию, посещали техкурсы и накопили опыт работы с техникой любых поколений. Сегодня мы предлагаем ремонт стиральных машин в Одессе с гарантией, использованием оригинальных запчастей и вниманием к каждой детали. В нашем распоряжении — профессионально оснащённая мастерская, склад комплектующих и выездной сервис. Мы находим даже редкие детали и точно знаем, как продлить жизнь вашей технике.</span>
@@ -3605,7 +3709,7 @@ const Frame1196 = (props) => {
             <span>Контакты</span>
           </h2>
           <p className="textITOGI">
-              <span>Ниже на сайте — карта проезда к нашей мастерской, а также наши телефоны. Звоните для записи, консультации или если заметили сбои в работе вашей стиральной машины. Мы всё объясним, рассчитаем стоимость и поможем."Ваше название" — это ремонт стиральных машин в Одессе быстро, надёжно и профессионально.</span>
+              <span>Ниже на сайте — карта проезда к нашей мастерской, а также наши телефоны. Звоните для записи, консультации или если заметили сбои в работе вашей стиральной машины. Мы всё объясним, рассчитаем стоимость и поможем. "Ваше название" — это ремонт стиральных машин в Одессе быстро, надёжно и профессионально.</span>
           </p>
         </div>
         )}
@@ -3650,7 +3754,7 @@ const Frame1196 = (props) => {
               className="frame1196-frame10701"
             />
             <p className="frame1196-text276">
-                Я долбоеб. я не могу жить без стиралки, потому что когда она сломана я не могу плакать на взрыд во время отжима.
+                Я додик. я не могу жить без стиралки, поэтому что когда она сломана я не могу плакать на взрыд во время отжима.
             </p>
             <svg
               width="330"
@@ -4102,6 +4206,32 @@ const Frame1196 = (props) => {
             justify-content: center;
             background-color: #ffffff;
           }
+
+          /* Kyiv discount banner */
+          .kyiv-discount-wrapper { width: 100%; display: flex; justify-content: center; margin: 24px 20px 124px; }
+          .kyiv-discount-inner { width: 1000px; height: 325px; background: #87CEEB; border-radius: 12px; display: flex; align-items: center; justify-content: flex-start; padding: 28px; padding-left: 71px; box-shadow: 0 10px 30px rgba(0,0,0,.08); position: relative; overflow: visible; }
+          .kyiv-discount-content { max-width: 540px; display: flex; flex-direction: column; gap: 12px; }
+          .kyiv-discount-heading { display: flex; flex-direction: column; gap: 6px; }
+          .kyiv-discount-figure { margin-left: auto; height: 100%; display: flex; align-items: flex-end; padding-right: 50px; position: relative; }
+          .kyiv-discount-img { height: 380px; width: auto; object-fit: contain; margin-bottom: -27px; position: relative; z-index: 1; }
+          .kyiv-discount-title { margin: 0; font-size: 28px; font-family: var(--font-roboto); font-weight: 400; color: #ffffff; }
+          .kyiv-discount-time { margin: 0; font-size: 28px; font-family: var(--font-roboto); font-weight: 400; color: #FFD84D; }
+          .kyiv-discount-sub { margin: 12px 0; font-size: 14px; color: #ffffff; opacity: 0.92; font-family: var(--font-nunito); }
+          .kyiv-discount-form { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+          .kyiv-phone-group { flex: 1 1 320px; min-width: 240px; }
+          .kyiv-banner-btn { flex: 1 1 320px; min-width: 240px; width: 100%; }
+          .kyiv-phone-group { position: relative; }
+          .kyiv-phone-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #666; font-family: var(--font-nunito); font-size: 16px; }
+          .kyiv-phone-input { padding: 12px 12px 12px 66px; font-size: 16px; border: 2px solid rgba(0,0,0,.12); border-radius: 8px; background: #ffffff; outline: none; min-width: 240px; width: 100%; font-family: var(--font-nunito); }
+          .kyiv-phone-input:focus { background-color: #E8F0FE; border-color: #ddd; border-width: 1px; box-shadow: none; }
+          .kyiv-banner-btn { height: 46px; padding: 0 18px; border: none; border-radius: 8px; background: #282828; color: #fff; cursor: pointer; font-family: var(--font-nunito); font-size: 15px; font-weight: 400; letter-spacing: 1.5px; box-shadow: 5px 5px 10px rgba(43,43,43,.68); transition: transform .2s ease, box-shadow .2s ease; }
+          .kyiv-banner-btn:hover { transform: translateY(-1px); box-shadow: 5px 8px 16px rgba(43,43,43,.8); background: #87ceeb; }
+          .kyiv-status { width: 100%; font-size: 14px; color: #1b1b1b; font-family: var(--font-nunito); }
+          .kyiv-honeypot { display: none; }
+          .kyiv-discount-figure::before { content: ""; position: absolute; width: 320px; height: 260px; background: #A8D3E8; border-radius: 12px; transform: rotate(-4deg); bottom: 8px; right: 10px; z-index: 0; pointer-events: none; }
+          @media (max-width: 991px) { .kyiv-discount-figure { display: none; } .kyiv-discount-inner { max-width: 600px; width: 100%; flex-direction: column; align-items: center; justify-content: center; padding: 20px; } .kyiv-discount-content { max-width: 100%; align-items: center; text-align: center; gap: 16px; } .kyiv-discount-heading { margin-bottom: 0; gap: 6px; } .kyiv-discount-form { justify-content: center; gap: 16px; } }
+          @media (max-width: 767px) { .kyiv-discount-inner { min-height: 0; border-radius: 10px; padding: 18px; width: 100%; height: auto; max-width: 300px; } .kyiv-discount-title { font-size: 22px; } .kyiv-discount-time { font-size: 22px; } .kyiv-phone-prefix { font-size: 15px; left: 12px; } .kyiv-phone-input { padding: 10px 10px 10px 56px; font-size: 15px; min-width: 0; } .kyiv-banner-btn { height: 40px; font-size: 14px; padding: 0 14px; } .kyiv-discount-content { gap: 16px; } .kyiv-discount-heading { margin-bottom: 0; gap: 6px; } .kyiv-discount-form { gap: 18px; } .kyiv-phone-group, .kyiv-banner-btn { flex: 1 1 100%; width: 100%; } }
+
           @media (min-width: 992px) {
             .frame1196-container100 { background-image: url('/to%20the%20backgrouund-1500w.png'); }
           }
@@ -5381,7 +5511,7 @@ const Frame1196 = (props) => {
             display: flex;
             position: relative;
             align-items: center;
-            padding-top: 8px;
+            padding-top: 6px;
             padding-right: var(--dl-layout-space-unit);
             padding-bottom: 6px;
             justify-content: center;
@@ -5480,9 +5610,9 @@ const Frame1196 = (props) => {
             display: flex;
             position: relative;
             align-items: center;
-            padding-top: 8px;
+            padding-top: 6px;
             padding-right: var(--dl-layout-space-unit);
-            padding-bottom: 8px;
+            padding-bottom: 6px;
             justify-content: center;
           }
           .frame1196-container137 {
@@ -5569,9 +5699,9 @@ const Frame1196 = (props) => {
             display: flex;
             position: relative;
             align-items: center;
-            padding-top: 8px;
+            padding-top: 6px;
             padding-right: var(--dl-layout-space-unit);
-            padding-bottom: 8px;
+            padding-bottom: 6px;
             justify-content: center;
           }
           .frame1196-container141 {
@@ -5833,9 +5963,9 @@ const Frame1196 = (props) => {
             display: flex;
             position: relative;
             align-items: center;
-            padding-top: 8px;
+            padding-top: 6px;
             padding-right: var(--dl-layout-space-unit);
-            padding-bottom: 8px;
+            padding-bottom: 6px;
             justify-content: center;
           }
           .frame1196-container145 {
@@ -6223,7 +6353,7 @@ const Frame1196 = (props) => {
             background-color: #e6c043;
           }
           .frame1196-container160 {
-            gap: Thre0eUnits;
+            gap: var(--dl-layout-space-threeunits);
             width: 100%;
             height: 100%;
             display: flex;
@@ -7123,7 +7253,7 @@ const Frame1196 = (props) => {
             min-height: 800px;
             align-items: center;
             justify-content: center;
-            scroll-snap-type: mandatory;
+            scroll-snap-type: both mandatory;
           }
           .frame1196-container185 {
             flex: 0 0 auto;
@@ -7563,11 +7693,11 @@ const Frame1196 = (props) => {
             height: 32px;
             display: flex;
             align-items: flex-start;
-            border-color: var(--dl-color-theme-neutral-dark);
+            border-color: #444444;
             border-width: 1px;
             border-radius: var(--dl-layout-radius-round);
             justify-content: flex-start;
-            background-color: var(--dl-color-theme-neutral-dark);
+            background-color: #444444;
           }
           .frame1196-icon338 {
             fill: var(--dl-color-theme-neutral-dark);
@@ -7612,7 +7742,7 @@ const Frame1196 = (props) => {
             height: auto;
             font-size: 15px;
             align-self: center;
-            font-style: Regular;
+            font-weight: 400;
             text-align: left;
             font-family: var(--font-nunito);
             font-weight: 300;
@@ -7646,11 +7776,11 @@ const Frame1196 = (props) => {
             height: 32px;
             display: flex;
             align-items: flex-start;
-            border-color: var(--dl-color-theme-neutral-dark);
+            border-color: #444444;
             border-width: 1px;
             border-radius: var(--dl-layout-radius-round);
             justify-content: flex-start;
-            background-color: #191818;
+            background-color: #444444;
           }
           .frame1196-icon340 {
             fill: var(--dl-color-theme-neutral-dark);
@@ -7687,7 +7817,7 @@ const Frame1196 = (props) => {
             height: auto;
             font-size: 15px;
             align-self: center;
-            font-style: Regular;
+            font-weight: 400;
             text-align: left;
             font-family: var(--font-nunito);
             font-weight: 300;
@@ -7721,11 +7851,11 @@ const Frame1196 = (props) => {
             height: 32px;
             display: flex;
             align-items: flex-start;
-            border-color: var(--dl-color-theme-neutral-dark);
+            border-color: #444444;
             border-width: 1px;
             border-radius: var(--dl-layout-radius-round);
             justify-content: flex-start;
-            background-color: var(--dl-color-theme-neutral-dark);
+            background-color: #444444;
           }
           .frame1196-icon342 {
             fill: var(--dl-color-theme-neutral-dark);
@@ -7763,7 +7893,7 @@ const Frame1196 = (props) => {
             height: auto;
             font-size: 15px;
             align-self: center;
-            font-style: Regular;
+            font-weight: 400;
             text-align: center;
             font-family: var(--font-nunito);
             font-weight: 300;
@@ -7778,7 +7908,7 @@ const Frame1196 = (props) => {
             display: flex;
             z-index: 1;
             max-width: 400px;
-            max-height: auto;
+            max-height: none;
             min-height: 100%;
             align-items: flex-start;
             flex-direction: column;
@@ -7794,15 +7924,15 @@ const Frame1196 = (props) => {
             flex-direction: row;
           }
           .frame1196-container220 {
-            width: 31px;
-            height: 31px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: flex-start;
-            border-color: var(--dl-color-theme-neutral-dark);
+            border-color: #444444;
             border-width: 1px;
             border-radius: var(--dl-layout-radius-round);
             justify-content: flex-start;
-            background-color: var(--dl-color-theme-neutral-dark);
+            background-color: #444444;
           }
           .frame1196-icon344 {
             fill: var(--dl-color-theme-neutral-dark);
@@ -7840,7 +7970,7 @@ const Frame1196 = (props) => {
             height: auto;
             font-size: 15px;
             align-self: center;
-            font-style: Regular;
+            font-weight: 400;
             text-align: left;
             font-family: var(--font-nunito);
             font-weight: 300;
@@ -7855,7 +7985,7 @@ const Frame1196 = (props) => {
             display: flex;
             z-index: 1;
             max-width: 400px;
-            max-height: auto;
+            max-height: none;
             min-height: 100%;
             align-items: flex-start;
             flex-direction: column;
@@ -7874,11 +8004,11 @@ const Frame1196 = (props) => {
             height: 32px;
             display: flex;
             align-items: flex-start;
-            border-color: var(--dl-color-theme-neutral-dark);
+            border-color: #444444;
             border-width: 1px;
             border-radius: var(--dl-layout-radius-round);
             justify-content: flex-start;
-            background-color: #191818;
+            background-color: #444444;
           }
           .frame1196-icon346 {
             fill: var(--dl-color-theme-neutral-dark);
@@ -7916,7 +8046,7 @@ const Frame1196 = (props) => {
             height: auto;
             font-size: 15px;
             align-self: center;
-            font-style: Regular;
+            font-weight: 400;
             text-align: left;
             font-family: var(--font-nunito);
             font-weight: 300;
@@ -8083,7 +8213,7 @@ const Frame1196 = (props) => {
             align-self: center;
             background: linear-gradient(180deg, #fdfdf6 0%, #faf8f6 100%);
             box-shadow: 0px 10px 20px 0px #d4d4d4;
-            max-height: auto;
+            max-height: none;
             min-height: 310px;
             align-items: flex-start;
             flex-shrink: 0;
@@ -8118,7 +8248,7 @@ const Frame1196 = (props) => {
             color: #5a5757;
             height: auto;
             font-size: 17px;
-            font-style: Regular;
+            font-weight: 400;
             text-align: center;
             font-family: var(--font-nunito);
             font-weight: 300;
@@ -8207,7 +8337,7 @@ const Frame1196 = (props) => {
             align-self: center;
             background: linear-gradient(180deg, #fdfdf6 0%, #faf8f6 100%);
             box-shadow: 0px 10px 20px 0px #d4d4d4;
-            max-height: auto;
+            max-height: none;
             min-height: 310px;
             align-items: flex-start;
             flex-shrink: 0;
@@ -8243,7 +8373,7 @@ const Frame1196 = (props) => {
             color: #5a5757;
             height: auto;
             font-size: 17px;
-            font-style: Regular;
+            font-weight: 400;
             text-align: center;
             font-family: var(--font-nunito);
             font-weight: 300;
@@ -8332,7 +8462,7 @@ const Frame1196 = (props) => {
             align-self: center;
             background: linear-gradient(180deg, #fdfdf6 0%, #faf8f6 100%);
             box-shadow: 0px 10px 20px 0px #d4d4d4;
-            max-height: auto;
+            max-height: none;
             min-height: 310px;
             align-items: flex-start;
             flex-shrink: 0;
@@ -8368,7 +8498,7 @@ const Frame1196 = (props) => {
             color: #5a5757;
             height: auto;
             font-size: 17px;
-            font-style: Regular;
+            font-weight: 400;
             text-align: center;
             font-family: var(--font-nunito);
             font-weight: 300;
@@ -8478,7 +8608,7 @@ const Frame1196 = (props) => {
             width: 100%;
             height: 100%;
             display: flex;
-            max-width: auto;
+            max-width: none;
             min-width: auto;
             align-self: center;
             max-height: 500px;
@@ -8579,7 +8709,7 @@ const Frame1196 = (props) => {
             height: 100%;
             display: flex;
             align-self: flex-start;
-            max-height: auto;
+            max-height: none;
             min-height: auto;
             flex-direction: column;
           }
@@ -8680,7 +8810,7 @@ const Frame1196 = (props) => {
             text-decoration: none;
           }
 
-          /* Hover э���ф��кты для навигаци�� в футере */
+          /* Hover э���ф��кты для навигаци���� в футере */
           .frame1196-text288:hover,
           .frame1196-text289:hover,
           .frame1196-text290:hover {
@@ -8695,7 +8825,7 @@ const Frame1196 = (props) => {
             color: rgb(56, 56, 56);
             height: auto;
             font-size: 18px;
-            font-style: Regular;
+            font-weight: 400;
             margin-top: var(--dl-layout-space-unit);
             text-align: center;
             font-family: var(--font-nunito);
@@ -8720,14 +8850,14 @@ const Frame1196 = (props) => {
             position: absolute;
           }
 
-          /* У���ир��ем margin-bottom �� ���лока с з��голо��ком и кнопкой ��о 1618px */
+          /* У���ир��ем margin-bottom �� ���лока с з��голо��ком и кн��пкой ��о 1618px */
           @media (max-width: 1618px) {
             .frame1196-container112 {
               margin-bottom: 0px;
             }
           }
 
-          /* Отдел��н���й брейкпоинт для ��едера */
+          /* Отдел��н���й ��рейкпоинт для ��едера */
           @media (max-width: 1525px) {
             .frame1196-container103 {
               gap: var(--dl-layout-space-halfunit);
@@ -9088,7 +9218,7 @@ const Frame1196 = (props) => {
             .frame1196-container184 {
               width: auto;
               height: auto;
-              max-width: auto;
+              max-width: none;
               min-height: 100%;
               padding-top: 0px;
               padding-left: 0px;
@@ -10003,7 +10133,7 @@ const Frame1196 = (props) => {
               align-items: center;
               border-radius: var(--dl-layout-radius-round);
               justify-content: center;
-              background-color: #606060;
+              background-color: #444444;
             }
             .frame1196-icon328 {
               fill: var(--dl-color-theme-neutral-dark);
@@ -10017,7 +10147,7 @@ const Frame1196 = (props) => {
               align-items: center;
               border-radius: var(--dl-layout-radius-round);
               justify-content: center;
-              background-color: #606060;
+              background-color: #444444;
             }
             .frame1196-icon330 {
               fill: var(--dl-color-theme-neutral-dark);
@@ -10074,7 +10204,7 @@ const Frame1196 = (props) => {
               padding-right: 28px;
             }
             .frame1196-text250 {
-              font-size: 19;
+              font-size: 19px;
             }
             .frame1196-text274 {
               color: rgb(255, 255, 255);
@@ -10107,7 +10237,7 @@ const Frame1196 = (props) => {
             .frame1196-container236 {
               width: auto;
               height: auto;
-              max-width: auto;
+              max-width: none;
               min-height: auto;
             }
           }
@@ -10171,7 +10301,7 @@ const Frame1196 = (props) => {
               padding-top: 68px;
               padding-bottom: 0px;
               background-size: cover;
-              background-image: noone;
+              background-image: none;
               background-position: center;
             }
             .frame1196-container112 {
@@ -11468,7 +11598,7 @@ const Frame1196 = (props) => {
               width: auto;
               height: auto;
               border-width: 0.5px;
-              background-color: i;
+              background-color: #444444;
             }
             .frame1196-otvet5 {
               width: 270px;
@@ -11725,7 +11855,7 @@ const Frame1196 = (props) => {
             box-shadow: 0px 4px 15px 0px rgba(175, 160, 115, 0.4);
           }
 
-          /* Ан��мация ��азворачи������������ия и�� центр�� для ответов FAQ */
+          /* Ан��мация ��а��ворачи������������ия и�� центр�� для ответов FAQ */
           .frame1196-otvet1,
           .frame1196-otvet2,
           .frame1196-otvet3,
@@ -11796,7 +11926,7 @@ const Frame1196 = (props) => {
             fill: #4EC8ED !important;
           }
 
-          /* Пр�� нажатии ��а ��сю карточку - стрелка становится голуб��й */
+          /* Пр���� нажатии ��а ��сю карточку - стрелка становится голуб��й */
           .frame1196-container113:active .frame1196-arrow10 svg path,
           .frame1196-container114:active .frame1196-arrow11 svg path,
           .frame1196-container115:active .frame1196-arrow12 svg path,
@@ -11880,7 +12010,7 @@ const Frame1196 = (props) => {
             transition: transform 0.2s ease, filter 0.2s ease !important;
           }
 
-          /* Дополнительные hover эффект�� для текста и иконок в ������опках */
+          /* Дополнительные hover эффект�� для т��кста и иконок в ������опках */
           .frame1196-container136:hover .frame1196-text146,
           .frame1196-container140:hover .frame1196-text150,
           .frame1196-container144:hover .frame1196-text154,
@@ -11994,7 +12124,7 @@ const Frame1196 = (props) => {
             }
             p.frame1196-text240, p.frame1196-text242, p.frame1196-text244, p.frame1196-text246, p.frame1196-text248,
             .frame1196-text240, .frame1196-text242, .frame1196-text244, .frame1196-text246, .frame1196-text248 {
-              font-size: 15px !important;
+              font-size: 14px !important;
               line-height: 1.35 !important;
             }
             /* ensure answer containers don't force larger font via transform or other rules */

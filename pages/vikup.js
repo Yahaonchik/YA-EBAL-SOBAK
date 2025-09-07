@@ -1122,7 +1122,7 @@ const Vikup = (props) => {
             color: #373737;
             height: auto;
             font-size: 15px;
-            font-style: Regular;
+            font-weight: 400;
             text-align: center;
             font-family: var(--font-nunito);
             font-weight: 300;
@@ -1519,7 +1519,7 @@ const Vikup = (props) => {
             .page1-text13 {
               width: 100%;
               height: 100%;
-              max-width: auto;
+              max-width: none;
               padding-left: var(--dl-layout-space-oneandhalfunits);
               padding-right: var(--dl-layout-space-oneandhalfunits);
             }

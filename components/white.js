@@ -76,7 +76,7 @@ const White = (props) => {
             height: 100%;
             display: flex;
             position: relative;
-            max-width: auto;
+            max-width: none;
             min-width: auto;
             min-height: auto;
             padding-top: var(--dl-layout-space-unit);
@@ -89,7 +89,7 @@ const White = (props) => {
             display: flex;
             max-width: 20px;
             min-width: 20px;
-            max-height: auto;
+            max-height: none;
             min-height: auto;
             align-items: stretch;
             flex-direction: row;

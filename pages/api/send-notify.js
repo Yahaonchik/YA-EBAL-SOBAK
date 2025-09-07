@@ -41,7 +41,7 @@ export default async function handler(req, res) {
   const ua = req.headers['user-agent'] || ''
   const when = new Date().toLocaleString()
 
-  const text = `Новая заявка (${when})\nИмя: ${name || '-'}\nТел: ${phoneClean}\nСообщение: ${msg}\nСтрани��а: ${page}\nIP: ${ip}\nUA: ${ua}`
+  const text = `Новая заявка (${when})\nИмя: ${name || '-'}\nТел: ${phoneClean}\nСообщение: ${msg}\nСтраница: ${page}\nIP: ${ip}\nUA: ${ua}`
 
   try {
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`

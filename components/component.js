@@ -117,7 +117,7 @@ const AppComponent = (props) => {
               box-shadow: none;
             }
             .component-text1 {
-              font-size: 16;
+              font-size: 16px;
               font-family: var(--font-nunito);
             }
             .component-text2 {

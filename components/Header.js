@@ -138,7 +138,7 @@ const Header = () => {
               <div className="frame1196-container110">
                 <span className="frame1196-text106">
                   <span className="frame1196-text106-bold">Адрес:</span>
-                  <span className="frame1196-text106-normal"> пл. Независимости, 1, Одесса, Одесская область, 65000</span>
+                  <span className="frame1196-text106-normal"> пл. Независимости, 32, Одесса, Одесская область, 65000</span>
                 </span>
                 <span className="frame1196-text107">
                   <span className="frame1196-text107-bold">Пн-Вс:</span>

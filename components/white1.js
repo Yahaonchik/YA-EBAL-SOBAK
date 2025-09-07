@@ -75,7 +75,7 @@ const White1 = (props) => {
             max-width: 20px;
             min-width: 20px;
             align-self: stretch;
-            max-height: auto;
+            max-height: none;
             min-height: auto;
             justify-content: center;
           }

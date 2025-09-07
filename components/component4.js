@@ -67,9 +67,9 @@ const Component4 = (props) => {
             flex: 1;
             width: auto;
             display: flex;
-            max-width: auto;
+            max-width: none;
             min-width: 25px;
-            max-height: auto;
+            max-height: none;
             min-height: 35px;
             align-items: stretch;
             border-color: rgba(25, 24, 24, 0.51);
@@ -89,9 +89,9 @@ const Component4 = (props) => {
           .component4-container3 {
             width: 100%;
             display: flex;
-            max-width: auto;
+            max-width: none;
             min-width: 150px;
-            max-height: auto;
+            max-height: none;
             min-height: 40px;
             align-items: flex-start;
             padding-left: var(--dl-layout-space-unit);
@@ -111,7 +111,7 @@ const Component4 = (props) => {
             display: flex;
             max-width: 100%;
             min-width: 150px;
-            max-height: auto;
+            max-height: none;
             min-height: 35px;
             align-items: stretch;
             border-color: rgba(25, 24, 24, 0.56);

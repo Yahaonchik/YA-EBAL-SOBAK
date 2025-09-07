@@ -34,7 +34,8 @@ const SiteTagline = () => {
 
         @media (max-width: 991px) {
           .site-tagline {
-            padding: 0 16px calc(25px + env(safe-area-inset-bottom, 0px)) 16px !important;
+            padding: 0 16px 16px 16px !important;
+          padding-bottom: calc(25px + env(safe-area-inset-bottom, 0px)) !important;
           }
         }
 
