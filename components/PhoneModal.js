@@ -12,7 +12,7 @@ const PhoneModal = ({ isOpen, onClose }) => {
   const phoneDigits = PHONE_TEL.replace(/\D/g, '')
   const phoneDigits2 = PHONE_TEL_2.replace(/\D/g, '')
   const waHref = `https://wa.me/${phoneDigits}`
-  const tgHref = `https://t.me/+${phoneDigits}`
+  const tgHref = `https://t.me/bodycumonbodycam`
   const viberHref = `viber://chat?number=${phoneDigits}`
 
   return (
