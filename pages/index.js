@@ -20,6 +20,7 @@ import AskButton from '../components/AskButton'
     import { getSEOData } from '../utils/seoConfig'
     import { getMainPageStructuredData, getFAQData } from '../utils/structuredData'
     import InlineCTA from '../components/InlineCTA'
+import { PHONE_TEL } from '../utils/contacts'
 
 const Frame1196 = (props) => {
   const [activeFAQ, setActiveFAQ] = useState(1)
@@ -254,7 +255,7 @@ const Frame1196 = (props) => {
       })
       const raw = await res.text(); let data = null; try { data = raw ? JSON.parse(raw) : null } catch {}
       if (!res.ok) throw new Error((data && data.error) || raw || 'Ошибка')
-      setDiscountStatus('Заявка принята. Перезвоним в течение 10–15 минут.')
+      setDiscountStatus('Заявка принята. Перезвоним в течение 3 минут.')
       setDiscountPhone('')
       setTimeout(() => setDiscountStatus(''), 4000)
     } catch (err) {
@@ -815,9 +816,8 @@ const Frame1196 = (props) => {
                   <span className="frame1196-text140">1</span>
                 </div>
                 <span className="frame1196-text141">
-                  <span className="frame1196-text142">Выезд мастера (</span>
-                  <span className="frame1196-text143">при ремонте</span>
-                  <span className="frame1196-text144">)</span>
+                  <span className="price-title">Выезд мастера </span>
+                  <em className="price-italic">(при ремонте)</em>
                 </span>
               </div>
               <div className="frame1196-container135">
@@ -852,8 +852,10 @@ const Frame1196 = (props) => {
                     strokeDasharray="11 11"
                   ></path>
                 </svg>
-                <div className="frame1196-container136 clickable-button" onClick={openModal}>
-                  <InlineCTA onClick={openModal} />
+                <div className="price-actions">
+                  <div className="frame1196-container136 clickable-button" onClick={openModal}>
+                    <InlineCTA onClick={openModal} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -863,7 +865,8 @@ const Frame1196 = (props) => {
                   <span className="frame1196-text147">2</span>
                 </div>
                 <span className="frame1196-text148">
-                  Диагностика оборудования (при ремонте)
+                  <span className="price-title">Диагностика оборудования </span>
+                  <em className="price-italic">(при ремонте)</em>
                 </span>
               </div>
               <div className="frame1196-container139">
@@ -898,8 +901,10 @@ const Frame1196 = (props) => {
                     strokeDasharray="11 11"
                   ></path>
                 </svg>
-                <div className="frame1196-container140 clickable-button" onClick={openModal}>
-                  <InlineCTA onClick={openModal} />
+                <div className="price-actions">
+                  <div className="frame1196-container140 clickable-button" onClick={openModal}>
+                    <InlineCTA onClick={openModal} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -909,7 +914,8 @@ const Frame1196 = (props) => {
                   <span className="frame1196-text151">3</span>
                 </div>
                 <span className="frame1196-text152">
-                  Диагностика оборудования (при отказе от ремонта)
+                  <span className="price-title">Диагностика оборудования </span>
+                  <em className="price-italic">(при отказе от ремонта)</em>
                 </span>
               </div>
               <div className="frame1196-container143">
@@ -944,8 +950,10 @@ const Frame1196 = (props) => {
                     strokeDasharray="11 11"
                   ></path>
                 </svg>
-                <div className="frame1196-container144 clickable-button" onClick={openModal}>
-                  <InlineCTA onClick={openModal} />
+                <div className="price-actions">
+                  <div className="frame1196-container144 clickable-button" onClick={openModal}>
+                    <InlineCTA onClick={openModal} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1278,7 +1286,7 @@ const Frame1196 = (props) => {
               text={
                 <Fragment>
                   <span className="frame1196-text195">
-                    <span>Замена амортизаторов (без учетаа стоимости амортизаторов)</span>
+                    <span>Замена амортизаторов (без учета стоимости амортизаторов)</span>
                   </span>
                 </Fragment>
               }
@@ -1331,7 +1339,7 @@ const Frame1196 = (props) => {
               text3={
                 <Fragment>
                   <span className="frame1196-text202">
-                    <span>Вызать мастера</span>
+                    <span>Вызвать мастера</span>
                   </span>
                 </Fragment>
               }
@@ -1960,7 +1968,7 @@ const Frame1196 = (props) => {
                     <h3 className="frame1196-text218">
                       <span
                         dangerouslySetInnerHTML={{
-                          __html: 'Современное оборудование по диаагностике',
+                          __html: 'Современное оборудование по диагностике',
                         }}
                       ></span>
                     </h3>
@@ -2878,6 +2886,9 @@ const Frame1196 = (props) => {
               <p className="kyiv-discount-sub">Перезвоним в течение 3 минут</p>
               <form className="kyiv-discount-form" onSubmit={handleDiscountSubmit}>
                 <div className="kyiv-phone-group">
+                  <span className="kyiv-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.05-.24c1.12.37 2.33.57 3.54.57a1 1 0 011 1V21a1 1 0 01-1 1C10.07 22 2 13.93 2 3a1 1 0 011-1h3.49a1 1 0 011 1c0 1.21.2 2.42.57 3.54a1 1 0 01-.24 1.05l-2.2 2.2z"/></svg>
+                  </span>
                   <span className="kyiv-phone-prefix">+380</span>
                   <input
                     type="tel"
@@ -2886,7 +2897,7 @@ const Frame1196 = (props) => {
                     pattern="\d{9}"
                     maxLength={9}
                     className="kyiv-phone-input"
-                    placeholder="Номер телефона"
+                    placeholder=""
                     value={discountPhone}
                     onChange={handleDiscountPhoneChange}
                     required
@@ -3754,7 +3765,7 @@ const Frame1196 = (props) => {
               className="frame1196-frame10701"
             />
             <p className="frame1196-text276">
-                «Стиралка сильно шумела при отжиме — было невозможно находиться в комнате. Вызвал мастера, приехал вовремя, разобрал, заменил подшипники и дал советы, как ухаживать за техникой. Работает тихо, как в первый день после покупки. Спасибо за профессионализм!»
+                Стиралка сильно шумела при отжиме — было невозможно находиться в комнате. Вызвал мастера, приехал вовремя, разобрал, заменил подшипники и дал советы, как ухаживать за техникой. Работает тихо, как в первый день после покупки. Спасибо за профессионализм!»
             </p>
             <svg
               width="330"
@@ -4209,28 +4220,41 @@ const Frame1196 = (props) => {
 
           /* Kyiv discount banner */
           .kyiv-discount-wrapper { width: 100%; display: flex; justify-content: center; margin: 24px 20px 124px; }
-          .kyiv-discount-inner { width: 1000px; height: 325px; background: #87CEEB; border-radius: 12px; display: flex; align-items: center; justify-content: flex-start; padding: 28px; padding-left: 71px; box-shadow: 0 10px 30px rgba(0,0,0,.08); position: relative; overflow: visible; }
+          .kyiv-discount-inner { width: 1000px; height: 325px; background: #87CEEB; border-radius: 12px; display: flex; align-items: center; justify-content: flex-start; padding: 28px; padding-left: 71px; box-shadow: 0px 6px 15px 0px #d4d4d4; position: relative; overflow: visible; }
           .kyiv-discount-content { max-width: 540px; display: flex; flex-direction: column; gap: 12px; }
+          .kyiv-discount-inner { font-family: var(--font-nunito); }
           .kyiv-discount-heading { display: flex; flex-direction: column; gap: 6px; }
           .kyiv-discount-figure { margin-left: auto; height: 100%; display: flex; align-items: flex-end; padding-right: 50px; position: relative; }
           .kyiv-discount-img { height: 380px; width: auto; object-fit: contain; margin-bottom: -27px; position: relative; z-index: 1; }
-          .kyiv-discount-title { margin: 0; font-size: 28px; font-family: var(--font-roboto); font-weight: 400; color: #ffffff; }
-          .kyiv-discount-time { margin: 0; font-size: 28px; font-family: var(--font-roboto); font-weight: 400; color: #FFD84D; }
+          .kyiv-discount-title { margin: 0; font-size: 28px; font-family: var(--font-nunito); font-weight: 400; color: #ffffff; }
+          .kyiv-discount-time { margin: 0; font-size: 28px; font-family: var(--font-nunito); font-weight: 400; color: #282828; }
           .kyiv-discount-sub { margin: 12px 0; font-size: 14px; color: #ffffff; opacity: 0.92; font-family: var(--font-nunito); }
           .kyiv-discount-form { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
           .kyiv-phone-group { flex: 1 1 320px; min-width: 240px; }
           .kyiv-banner-btn { flex: 1 1 320px; min-width: 240px; width: 100%; }
           .kyiv-phone-group { position: relative; }
-          .kyiv-phone-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #666; font-family: var(--font-nunito); font-size: 16px; }
-          .kyiv-phone-input { padding: 12px 12px 12px 66px; font-size: 16px; border: 2px solid rgba(0,0,0,.12); border-radius: 8px; background: #ffffff; outline: none; min-width: 240px; width: 100%; font-family: var(--font-nunito); }
-          .kyiv-phone-input:focus { background-color: #E8F0FE; border-color: #ddd; border-width: 1px; box-shadow: none; }
+          .kyiv-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: #b3b3b3; pointer-events: none; transition: color 0.2s ease; display: inline-flex; align-items: center; justify-content: center; }
+          .kyiv-phone-group:focus-within .kyiv-icon, .kyiv-phone-group:focus-within .kyiv-phone-prefix { color: #87ceeb; }
+          .kyiv-phone-prefix { position: absolute; left: 42px; top: 50%; transform: translateY(-50%); color: #C1C1C1; font-family: var(--font-nunito); font-size: 16px; }
+          .kyiv-phone-input { padding: 12px 12px 12px 96px; font-size: 16px; border: none; border-radius: 8px; background: #ffffff; outline: none; min-width: 240px; width: 100%; font-family: var(--font-nunito); height: 46px; line-height: 46px; }
+          .kyiv-phone-input::placeholder { color: #C1C1C1; }
+          .kyiv-phone-input:focus { background-color: #E8F0FE; box-shadow: none; }
           .kyiv-banner-btn { height: 46px; padding: 0 18px; border: none; border-radius: 8px; background: #282828; color: #fff; cursor: pointer; font-family: var(--font-nunito); font-size: 15px; font-weight: 400; letter-spacing: 1.5px; box-shadow: 5px 5px 10px rgba(43,43,43,.68); transition: transform .2s ease, box-shadow .2s ease; }
           .kyiv-banner-btn:hover { transform: translateY(-1px); box-shadow: 5px 8px 16px rgba(43,43,43,.8); background: #87ceeb; }
           .kyiv-status { width: 100%; font-size: 14px; color: #1b1b1b; font-family: var(--font-nunito); }
           .kyiv-honeypot { display: none; }
+          @media (max-width: 991px) { .kyiv-discount-wrapper { margin: 0 20px 62px; } }
+          @media (max-width: 767px) { .kyiv-discount-wrapper { margin: 0 20px 62px; } }
+          @media (min-width: 992px) { .kyiv-discount-inner { box-shadow: 0px 6px 15px 0px #d4d4d4; } }
           .kyiv-discount-figure::before { content: ""; position: absolute; width: 320px; height: 260px; background: #A8D3E8; border-radius: 12px; transform: rotate(-4deg); bottom: 8px; right: 10px; z-index: 0; pointer-events: none; }
+          .price-italic { font-style: italic; font-weight: inherit; }
+          .price-actions { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+          .price-call { color: #282828; font-family: var(--font-nunito); font-size: 15px; text-decoration: underline; }
+          .price-title { font-style: normal; }
           @media (max-width: 991px) { .kyiv-discount-figure { display: none; } .kyiv-discount-inner { max-width: 600px; width: 100%; flex-direction: column; align-items: center; justify-content: center; padding: 20px; } .kyiv-discount-content { max-width: 100%; align-items: center; text-align: center; gap: 16px; } .kyiv-discount-heading { margin-bottom: 0; gap: 6px; } .kyiv-discount-form { justify-content: center; gap: 16px; } }
-          @media (max-width: 767px) { .kyiv-discount-inner { min-height: 0; border-radius: 10px; padding: 18px; width: 100%; height: auto; max-width: 300px; } .kyiv-discount-title { font-size: 22px; } .kyiv-discount-time { font-size: 22px; } .kyiv-phone-prefix { font-size: 15px; left: 12px; } .kyiv-phone-input { padding: 10px 10px 10px 56px; font-size: 15px; min-width: 0; } .kyiv-banner-btn { height: 40px; font-size: 14px; padding: 0 14px; } .kyiv-discount-content { gap: 16px; } .kyiv-discount-heading { margin-bottom: 0; gap: 6px; } .kyiv-discount-form { gap: 18px; } .kyiv-phone-group, .kyiv-banner-btn { flex: 1 1 100%; width: 100%; } }
+          @media (max-width: 767px) { .kyiv-discount-inner { min-height: 0; border-radius: 10px; padding: 18px; width: 100%; height: auto; max-width: 300px; animation: kyivEnter .45s ease-out both; } .kyiv-discount-title { font-size: 21px; } .kyiv-discount-time { font-size: 21px; } .kyiv-phone-prefix { font-size: 14px; left: 40px; } .kyiv-phone-input { padding: 10px 10px 10px 86px; font-size: 13px; min-width: 0; height: 42px; line-height: 42px; } .kyiv-banner-btn { height: 40px; font-size: 13px; padding: 0 14px; } .kyiv-discount-sub { font-size: 13px; } .kyiv-status { font-size: 13px; } .kyiv-discount-content { gap: 16px; } .kyiv-discount-heading { margin-bottom: 0; gap: 6px; } .kyiv-discount-form { gap: 18px; } .kyiv-phone-group, .kyiv-banner-btn { flex: 1 1 100%; width: 100%; } }
+
+          @keyframes kyivEnter { from { transform: translateX(-16px) translateY(8px) scale(0.98); opacity: 0; } to { transform: translateX(0) translateY(0) scale(1); opacity: 1; } }
 
           @media (min-width: 992px) {
             .frame1196-container100 { background-image: url('/to%20the%20backgrouund-1500w.png'); }
@@ -5493,7 +5517,7 @@ const Frame1196 = (props) => {
             position: relative;
             max-width: 1000px;
             background: linear-gradient(180deg, #fdfdf9 0%, #faf8f6 100%);
-            box-shadow: 0px 0px 10px 0px #d4d4d4;
+            box-shadow: 0px 6px 15px 0px #d4d4d4;
             align-items: center;
             padding-top: var(--dl-layout-space-halfunit);
             padding-left: var(--dl-layout-space-halfunit);
@@ -8810,7 +8834,7 @@ const Frame1196 = (props) => {
             text-decoration: none;
           }
 
-          /* Hover э���ф��кты для навигаци���� в футере */
+          /* Hover �����ф��кты для навигаци���� в футере */
           .frame1196-text288:hover,
           .frame1196-text289:hover,
           .frame1196-text290:hover {
@@ -8850,7 +8874,7 @@ const Frame1196 = (props) => {
             position: absolute;
           }
 
-          /* У���ир��ем margin-bottom �� ���лока с з��голо��ком и кн��пкой ��о 1618px */
+          /* У���ир��ем margin-bottom �� ���лока с з��голо��ком и к����пкой ��о 1618px */
           @media (max-width: 1618px) {
             .frame1196-container112 {
               margin-bottom: 0px;
@@ -11805,7 +11829,7 @@ const Frame1196 = (props) => {
               text-decoration: none;
             }
 
-            /* Hover эффе��ты для навигации в фут��ре на мобильных */
+            /* Hover эффе��ты для навигации в фут��ре н�� мобильных */
             .frame1196-text288:hover,
             .frame1196-text289:hover,
             .frame1196-text290:hover {
@@ -11876,7 +11900,7 @@ const Frame1196 = (props) => {
             padding-bottom: 0 !important;
           }
 
-          /* По��азывать ��ктивные от����е��ы с эффе��то���� разв���р��чиван��я */
+          /* По����азывать ��ктивные от����е��ы с эффе��то���� разв�����р��чиван��я */
           .frame1196-otvet1.faq-active,
           .frame1196-otvet2.faq-active,
           .frame1196-otvet3.faq-active,
@@ -11889,7 +11913,7 @@ const Frame1196 = (props) => {
           }
 
 
-          /* Ли��������йная а����м��ция д�����я ико����к */
+          /* Ли����������йная а����м��ция д�����я ико����к */
           .frame1196-icon338,
           .frame1196-icon340,
           .frame1196-icon342,
@@ -11912,7 +11936,7 @@ const Frame1196 = (props) => {
             transition: fill 0.3s ease;
           }
 
-          /* При наведении н�� всю карточку - стрелка становится ��олубой */
+          /* При наведении н�� всю карточку - стрелка становит��я ��олубой */
           .frame1196-container113:hover .frame1196-arrow10 svg path,
           .frame1196-container114:hover .frame1196-arrow11 svg path,
           .frame1196-container115:hover .frame1196-arrow12 svg path,
@@ -11969,7 +11993,7 @@ const Frame1196 = (props) => {
             transform: translateY(0) !important;
           }
 
-          /* ��лоба���ьные hover эффекты для Blue1 и Blue2 ��о��понентов */
+          /* ��лоба���ьные hover эффекты для Blue1 и Blue2 ��о��п��нентов */
           :global(.blue1-container4),
           :global(.blue2-container4) {
             cursor: pointer !important;
@@ -12131,6 +12155,10 @@ const Frame1196 = (props) => {
             .frame1196-otvet1, .frame1196-otvet2, .frame1196-otvet3, .frame1196-otvet4, .frame1196-otvet5 {
               font-size: inherit !important;
             }
+            /* reduce h2 headings by 1px on phones */
+            .frame1196-text228, .frame1196-text238, .frame1196-text274 { font-size: 19px !important; }
+            /* blue section headings */
+            .frame1196-text215, .frame1196-text217 { font-size: 19px !important; }
           }
         `}
       </style>

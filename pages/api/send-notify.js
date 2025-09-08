@@ -10,22 +10,28 @@ export default async function handler(req, res) {
   }
 
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown'
-  const { name = '', phone = '', msg = '', honeypot = '' } = req.body || {}
+  const { name = '', phone = '', msg = '', honeypot = '', allowNoPhone = false } = req.body || {}
 
   if (honeypot && honeypot.trim() !== '') {
     return res.status(400).json({ error: 'Bot detected' })
   }
 
-  if (!phone || !msg) return res.status(400).json({ error: 'Phone and message required' })
-  if (typeof phone !== 'string' || typeof msg !== 'string') return res.status(400).json({ error: 'Invalid input' })
+  if (!msg) return res.status(400).json({ error: 'Message required' })
+  if (typeof msg !== 'string') return res.status(400).json({ error: 'Invalid input' })
   if (msg.length > 1000) return res.status(400).json({ error: 'Message too long' })
 
-  const phoneClean = phone.replace(/\s+/g, '')
-  if (!/^\+?\d{7,15}$/.test(phoneClean)) return res.status(400).json({ error: 'Invalid phone format' })
+  let phoneClean = ''
+  if (!allowNoPhone) {
+    if (!phone || typeof phone !== 'string') return res.status(400).json({ error: 'Phone required' })
+    phoneClean = phone.replace(/\s+/g, '')
+    if (!/^\+?\d{7,15}$/.test(phoneClean)) return res.status(400).json({ error: 'Invalid phone format' })
+  } else {
+    phoneClean = '-'
+  }
 
   try {
     if (!globalThis._tgRate) globalThis._tgRate = new Map()
-    const key = phoneClean + '|' + ip
+    const key = (allowNoPhone ? 'review' : phoneClean) + '|' + ip
     const now = Date.now()
     const prev = globalThis._tgRate.get(key) || 0
     const WINDOW_MS = 60 * 1000
@@ -41,7 +47,7 @@ export default async function handler(req, res) {
   const ua = req.headers['user-agent'] || ''
   const when = new Date().toLocaleString()
 
-  const text = `Новая заявка (${when})\nИмя: ${name || '-'}\nТел: ${phoneClean}\nСообщение: ${msg}\nСтраница: ${page}\nIP: ${ip}\nUA: ${ua}`
+  const text = `${allowNoPhone ? 'Новый отзыв' : 'Новая заявка'} (${when})\nИмя: ${name || '-'}\nТел: ${phoneClean}\nСообщение: ${msg}\nСтраница: ${page}\nIP: ${ip}\nUA: ${ua}`
 
   try {
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`
