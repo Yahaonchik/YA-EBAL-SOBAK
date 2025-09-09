@@ -43,6 +43,22 @@ const Frame1196 = (props) => {
   const [showReviews, setShowReviews] = useState(false)
   const reviewsRef = React.useRef(null)
   // Banner form state
+  const kyivDiscountRef = React.useRef(null)
+
+  useEffect(() => {
+    if (!kyivDiscountRef.current) return
+    const el = kyivDiscountRef.current
+    const obs = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.15 })
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
   const [discountPhone, setDiscountPhone] = useState('')
   const [discountStatus, setDiscountStatus] = useState('')
   const [discountSending, setDiscountSending] = useState(false)
@@ -51,7 +67,7 @@ const Frame1196 = (props) => {
   const [kyivRange, setKyivRange] = useState({ start: 0, end: 0 })
   const router = useRouter()
 
-  // Проверяем, является ли текущая страница страницей проблемы
+  // Про��еряем, является ли текущая стр��ница страницей проблемы
   const isProblemPage = router.pathname && (
     router.pathname.includes('NESLIVAETIVODU') ||
     router.pathname.includes('NEGREETIVODU') ||
@@ -271,7 +287,7 @@ const Frame1196 = (props) => {
     { question: 'Сколько времени занимает ремонт?', answer: '99% поломок устраняем на месте за 30–60 минут. Редкие случаи требуют заказа деталей и повторного визита 1–2 дня.' },
     { question: 'Какую гарантию вы предоставляете?', answer: 'На все виды работ — 6 месяцев, на заменённые запчасти — 1 год. Гарантийный талон выдаём после ремонта.' },
     { question: 'Сколько стоит диагностика?', answer: 'Диагностика — 200 грн. При согласии на ремонт эта сумма входит в стоимость работ. Выезд мастера бесплатный.' },
-    { question: 'Будет ли у мастера нужные детали?', answer: 'Мастер возит базовый набор популярных запчастей. Редкие детали заказываем за 1–2 дня, согласовываем по телефону.' },
+    { question: 'Будет ли у мастера нужные детали?', answer: 'Мастер возит ��азовый набор популярных запчастей. Редкие детали заказываем за 1–2 дня, согласовываем по телефону.' },
     { question: 'Дешевле отремонтировать или заменить?', answer: 'Если стоимость ремонта превышает 60% цены новой машины, выгоднее заменить. Мы честно консультируем по целесообразности.' }
   ]
   const structuredData = [...getMainPageStructuredData(baseUrl), getFAQData(faqItems)]
@@ -511,21 +527,10 @@ const Frame1196 = (props) => {
         <section className="frame1196-container123">
           <p className="frame1196-text122">
             <span className="frame1196-text123">В </span>
-            <span className="frame1196-text124">"Ваше название" </span>
-            <span className="frame1196-text125"></span>
-            <span className="frame1196-text126">
-               мы заботимся о надёжной работе вашей техники во всех уголках
-              Одессы.
-            </span>
-            <br className="frame1196-text127" />
-            <span className="frame1196-text128">
-              Профессионально устраняем любые неисправности стиральных машин —
-              от самых простых до самых сложных.
-            </span>
-            <br className="frame1196-text129" />
-            <span className="frame1196-text130">Просто позвоните или </span>
+            <span className="frame1196-text124">"Ваше название"</span>
+            <span> мы заботимся о надёжной работе вашей техники во всех уголках <span className="frame1196-text124">Одессы</span>. Профессионально устраняем любые неисправности стиральных машин — от самых простых до самых сложных. Просто позвоните или </span>
             <span className="frame1196-text131" onClick={openModal}>оставьте заявку</span>
-            <span className="frame1196-text132">, и мы вам перезвоним.</span>
+            <span>, и мы вам перезвоним.</span>
           </p>
           <div className="frame1196-container124">
             <svg
@@ -2877,7 +2882,7 @@ const Frame1196 = (props) => {
           </div>
         </section>
         <section className="kyiv-discount-wrapper">
-          <div className="kyiv-discount-inner">
+          <div className="kyiv-discount-inner" ref={kyivDiscountRef}>
             <div className="kyiv-discount-content">
               <div className="kyiv-discount-heading">
                 <h2 className="kyiv-discount-title">Скидка 10% на ремонт</h2>
@@ -3612,7 +3617,7 @@ const Frame1196 = (props) => {
               <span className="textITOGI">
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: 'Используем совремнное оборудование и точную диагностику.',
+                    __html: 'Используем современое оборудование и точную диагностику.',
                   }}
                 ></span>
               </span>
@@ -3706,7 +3711,7 @@ const Frame1196 = (props) => {
             <span>Обслуживаемые бренды</span>
           </h2>
           <p className="textITOGI">
-            <span>LG, Samsung, Bosch, Electrolux, Whirlpool, Indesit, Zanussi, Gorenje, AEG, Miele и другие. Работаем не только по Одессе, но и в пригородах.</span>
+            <span>LG, Samsung, Bosch, Electrolux, Whirlpool, Indesit, Zanussi, Gorenje, AEG, Miele и другие. Работает не только по Одессе, но и в пригородах.</span>
           </p>
           <h2 className="textglavitogi">
             <span>Сервисная мастерская</span>
@@ -3765,7 +3770,7 @@ const Frame1196 = (props) => {
               className="frame1196-frame10701"
             />
             <p className="frame1196-text276">
-                Стиралка сильно шумела при отжиме — было невозможно находиться в комнате. Вызвал мастера, приехал вовремя, разобрал, заменил подшипники и дал советы, как ухаживать за техникой. Работает тихо, как в первый день после покупки. Спасибо за профессионализм!»
+                Стиралка сильно шумела при отжиме и было невозможно находиться в комнате. Вызвал мастера, приехал вовремя, разобрал, заменил подшипники и дал советы, как ухаживать за техникой. Работает тихо, как в первый день после покупки. Спасибо за профессионализм!»
             </p>
             <svg
               width="330"
@@ -3916,7 +3921,7 @@ const Frame1196 = (props) => {
               className="frame1196-frame10702"
             />
             <p className="frame1196-text278">
-                Очень благодарна мастеру за быстрый ремонт! Стиральная машина перестала сливать воду, я думала придётся покупать новую. Приехали в тот же день, нашли поломку и всё починили за час. Теперь работает как новая. Рекомендую!
+                Очень благодарна мастеру за быстрый ремонт! Стиральная машина перестала сливать воду, я думаа придётся покупать новую. Приехали в тот же день, нашли поломку и всё починили за час. Теперь работает как новая. Рекомендую!
             </p>
             <svg
               width="330"
@@ -4066,7 +4071,7 @@ const Frame1196 = (props) => {
               src="/external/frame10708949-1dvi.svg"
               className="frame1196-frame10703"
             />
-            <p className="frame1196-text280">Обожаю стирать руками</p>
+            <p className="frame1196-text280">Я думал, что буду до конца своих дней стирать руками, пока не нашел данную компанию.</p>
             <svg
               width="330"
               xmlns="http://www.w3.org/2000/svg"
@@ -4220,7 +4225,13 @@ const Frame1196 = (props) => {
 
           /* Kyiv discount banner */
           .kyiv-discount-wrapper { width: 100%; display: flex; justify-content: center; margin: 24px 20px 124px; }
-          .kyiv-discount-inner { width: 1000px; height: 325px; background: #87CEEB; border-radius: 12px; display: flex; align-items: center; justify-content: flex-start; padding: 28px; padding-left: 71px; box-shadow: 0px 6px 15px 0px #d4d4d4; position: relative; overflow: visible; }
+          .kyiv-discount-inner { width: 1000px; height: 325px; background: #87CEEB; border-radius: 12px; display: flex; align-items: center; justify-content: flex-start; padding: 28px; padding-left: 71px; box-shadow: 0px 6px 15px 0px #d4d4d4; position: relative; overflow: visible; will-change: transform, opacity; opacity: 0; transform: translateX(-16px) translateY(8px) scale(0.98); }
+
+          .kyiv-discount-inner.in-view { animation: kyivEnter .6s ease-out both; opacity: 1; transform: translateX(0) translateY(0) scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .kyiv-discount-inner { animation: none !important; }
+}
           .kyiv-discount-content { max-width: 540px; display: flex; flex-direction: column; gap: 12px; }
           .kyiv-discount-inner { font-family: var(--font-nunito); }
           .kyiv-discount-heading { display: flex; flex-direction: column; gap: 6px; }
@@ -4252,7 +4263,7 @@ const Frame1196 = (props) => {
           .price-call { color: #282828; font-family: var(--font-nunito); font-size: 15px; text-decoration: underline; }
           .price-title { font-style: normal; }
           @media (max-width: 991px) { .kyiv-discount-figure { display: none; } .kyiv-discount-inner { max-width: 600px; width: 100%; flex-direction: column; align-items: center; justify-content: center; padding: 20px; } .kyiv-discount-content { max-width: 100%; align-items: center; text-align: center; gap: 16px; } .kyiv-discount-heading { margin-bottom: 0; gap: 6px; } .kyiv-discount-form { justify-content: center; gap: 16px; } }
-          @media (max-width: 767px) { .kyiv-discount-inner { min-height: 0; border-radius: 10px; padding: 18px; width: 100%; height: auto; max-width: 300px; animation: kyivEnter .45s ease-out both; } .kyiv-discount-title { font-size: 21px; } .kyiv-discount-time { font-size: 21px; } .kyiv-phone-prefix { font-size: 14px; left: 40px; } .kyiv-phone-input { padding: 10px 10px 10px 86px; font-size: 13px; min-width: 0; height: 42px; line-height: 42px; } .kyiv-banner-btn { height: 40px; font-size: 13px; padding: 0 14px; } .kyiv-discount-sub { font-size: 13px; } .kyiv-status { font-size: 13px; } .kyiv-discount-content { gap: 16px; } .kyiv-discount-heading { margin-bottom: 0; gap: 6px; } .kyiv-discount-form { gap: 18px; } .kyiv-phone-group, .kyiv-banner-btn { flex: 1 1 100%; width: 100%; } }
+          @media (max-width: 767px) { .kyiv-discount-inner { min-height: 0; border-radius: 10px; padding: 18px; width: 100%; height: auto; max-width: 300px; } .kyiv-discount-title { font-size: 21px; } .kyiv-discount-time { font-size: 21px; } .kyiv-phone-prefix { font-size: 14px; left: 40px; } .kyiv-phone-input { padding: 10px 10px 10px 86px; font-size: 13px; min-width: 0; height: 42px; line-height: 42px; } .kyiv-banner-btn { height: 40px; font-size: 13px; padding: 0 14px; } .kyiv-discount-sub { font-size: 13px; } .kyiv-status { font-size: 13px; } .kyiv-discount-content { gap: 16px; } .kyiv-discount-heading { margin-bottom: 0; gap: 6px; } .kyiv-discount-form { gap: 18px; } .kyiv-phone-group, .kyiv-banner-btn { flex: 1 1 100%; width: 100%; } }
 
           @keyframes kyivEnter { from { transform: translateX(-16px) translateY(8px) scale(0.98); opacity: 0; } to { transform: translateX(0) translateY(0) scale(1); opacity: 1; } }
 
@@ -5164,13 +5175,33 @@ const Frame1196 = (props) => {
             margin-top: var(--dl-layout-space-fourunits);
             text-align: center;
             font-family: var(--font-nunito);
-            font-weight: 400;
-            line-height: 1.25;
+            font-weight: 300;
+            line-height: 1.15;
+            letter-spacing: 0;
             font-stretch: normal;
-            padding-left: var(--dl-layout-space-unit);
+            padding-left: calc(var(--dl-layout-space-unit) + 10px);
             margin-bottom: var(--dl-layout-space-unit);
-            padding-right: var(--dl-layout-space-unit);
+            padding-right: calc(var(--dl-layout-space-unit) + 10px);
             text-decoration: none;
+          }
+
+          @media (max-width: 479px) {
+            .frame1196-text122 {
+              font-size: 15px;
+              font-family: var(--font-nunito);
+              color: rgb(55, 55, 55);
+              padding-left: calc(var(--dl-layout-space-unit) + 10px);
+              padding-right: calc(var(--dl-layout-space-unit) + 10px);
+            }
+
+            /* Service lines: reduce by 0.5px (from 14.5 -> 14) and darken by ~10% */
+            .frame1196-text134,
+            .frame1196-text136,
+            .frame1196-text138 {
+              font-size: 14px;
+              color: #2e2e2e;
+              padding-right: calc(var(--dl-layout-space-unit) + 10px) !important;
+            }
           }
           .frame1196-text123 {
             font-style: normal;
@@ -8965,8 +8996,8 @@ const Frame1196 = (props) => {
             .frame1196-text122 {
               font-size: 17.5px;
               font-family: var(--font-nunito);
-              padding-left: var(--dl-layout-space-threeunits);
-              padding-right: var(--dl-layout-space-threeunits);
+              padding-left: calc(var(--dl-layout-space-threeunits) + 10px);
+              padding-right: calc(var(--dl-layout-space-threeunits) + 10px);
             }
             .frame1196-text123 {
               font-style: normal;
@@ -10441,9 +10472,9 @@ const Frame1196 = (props) => {
               font-size: 15.5px;
               margin-top: var(--dl-layout-space-twounits);
               font-family: var(--font-nunito);
-              font-weight: 400;
-              padding-left: var(--dl-layout-space-unit);
-              padding-right: var(--dl-layout-space-unit);
+              font-weight: 300;
+              padding-left: calc(var(--dl-layout-space-unit) + 10px);
+              padding-right: calc(var(--dl-layout-space-unit) + 10px);
             }
             .frame1196-text123 {
               font-style: normal;
@@ -10535,7 +10566,8 @@ const Frame1196 = (props) => {
               width: 123px;
             }
             .frame1196-text134 {
-              font-size: 14px;
+              font-size: 13px;
+              color: #2e2e2e;
             }
             .frame1196-image25 {
               width: auto;
@@ -10600,11 +10632,20 @@ const Frame1196 = (props) => {
               width: 123px;
             }
             .frame1196-text138 {
-              fill: rgba(25, 24, 24, 0.9);
-              color: rgba(25, 24, 24, 0.9);
-              font-size: 14px;
+              fill: #2e2e2e;
+              color: #2e2e2e;
+              font-size: 13px;
               max-width: 170px;
               min-width: auto;
+            }
+
+            @media (max-width: 479px) {
+              .frame1196-text134,
+              .frame1196-text136,
+              .frame1196-text138 {
+                font-size: 13.5px !important;
+                color: #2e2e2e !important;
+              }
             }
             .frame1196-image27 {
               width: 60px;
@@ -10716,7 +10757,7 @@ const Frame1196 = (props) => {
               align-items: center;
               font-family: var(--font-nunito);
               justify-content: center;
-              text-decoration: underline none;
+              text-decoration: underline;
             }
             .frame1196-blue2 {
               gap: var(--dl-layout-space-twounits);
@@ -10802,7 +10843,7 @@ const Frame1196 = (props) => {
               align-items: center;
               font-family: var(--font-nunito);
               justify-content: center;
-              text-decoration: underline none;
+              text-decoration: underline;
             }
             .frame1196-blue3 {
               gap: var(--dl-layout-space-twounits);
@@ -10888,7 +10929,7 @@ const Frame1196 = (props) => {
               align-items: center;
               font-family: var(--font-nunito);
               justify-content: center;
-              text-decoration: underline none;
+              text-decoration: underline;
             }
             .frame1196-blue4 {
               gap: var(--dl-layout-space-twounits);
@@ -11829,7 +11870,7 @@ const Frame1196 = (props) => {
               text-decoration: none;
             }
 
-            /* Hover эффе��ты для навигации в фут��ре н�� мобильных */
+            /* Hover эффе��ты ��ля навигации в фут��ре н�� мобильных */
             .frame1196-text288:hover,
             .frame1196-text289:hover,
             .frame1196-text290:hover {
@@ -11879,7 +11920,7 @@ const Frame1196 = (props) => {
             box-shadow: 0px 4px 15px 0px rgba(175, 160, 115, 0.4);
           }
 
-          /* Ан��мация ��а��ворачи������������ия и�� центр�� для ответов FAQ */
+          /* Ан��мация ��а��ворачи������������ия и�� центр�� ��ля ответов FAQ */
           .frame1196-otvet1,
           .frame1196-otvet2,
           .frame1196-otvet3,
@@ -11900,7 +11941,7 @@ const Frame1196 = (props) => {
             padding-bottom: 0 !important;
           }
 
-          /* По����азывать ��ктивные от����е��ы с эффе��то���� разв�����р��чиван��я */
+          /* По����азывать ��ктивны�� от����е��ы с эффе��то���� разв�����р��чиван��я */
           .frame1196-otvet1.faq-active,
           .frame1196-otvet2.faq-active,
           .frame1196-otvet3.faq-active,
@@ -11913,7 +11954,7 @@ const Frame1196 = (props) => {
           }
 
 
-          /* Ли����������йная а����м��ция д�����я ико����к */
+          /* Ли����������йная а�����м��ция д�����я ико�����к */
           .frame1196-icon338,
           .frame1196-icon340,
           .frame1196-icon342,
@@ -11936,7 +11977,7 @@ const Frame1196 = (props) => {
             transition: fill 0.3s ease;
           }
 
-          /* При наведении н�� всю карточку - стрелка становит��я ��олубой */
+          /* При наведении н�� всю карточку - стрелка стано��ит��я ��олубой */
           .frame1196-container113:hover .frame1196-arrow10 svg path,
           .frame1196-container114:hover .frame1196-arrow11 svg path,
           .frame1196-container115:hover .frame1196-arrow12 svg path,
@@ -11993,7 +12034,7 @@ const Frame1196 = (props) => {
             transform: translateY(0) !important;
           }
 
-          /* ��лоба���ьные hover эффекты для Blue1 и Blue2 ��о��п��нентов */
+          /* ��лоба���ьные hover эффекты для Blue1 и Blue2 ������п��нентов */
           :global(.blue1-container4),
           :global(.blue2-container4) {
             cursor: pointer !important;
