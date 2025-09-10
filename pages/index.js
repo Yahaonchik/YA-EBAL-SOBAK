@@ -328,7 +328,7 @@ const Frame1196 = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="frame1196-image15"><Image alt="Стиральна�� машина не сливает воду" src="/problems 2/11-300h.webp" fill sizes="149px" quality={100} priority loading="eager" style={{ objectFit: 'cover' }} /></div>
+                <div className="frame1196-image15"><Image alt="Стиральная машина не сливает воду" src="/problems 2/11-300h.webp" fill sizes="149px" quality={100} priority loading="eager" style={{ objectFit: 'cover' }} /></div>
               </a>
             </Link>
             <Link legacyBehavior href="/negreetvodu">
@@ -1627,7 +1627,7 @@ const Frame1196 = (props) => {
               </div>
               <div className="item">
                 <Image
-                  alt="Ремон�� стиральных машин Bosch в Одессе - профессиональный сервис"
+                  alt="Ремонт стиральных машин Bosch в Одессе - профессиональный сервис"
                   src="/brands/bosch-logo%202-200h.webp"
                   loading="eager"
                   className="frame1196-image34"
@@ -1771,7 +1771,7 @@ const Frame1196 = (props) => {
               </div>
               <div className="item">
                 <Image
-                  alt="Ремонт стиральных машин Samsung в Одессе - профессиональный се��вис"
+                  alt="Ремонт стиральных машин Samsung в Одессе - профессиональный сервис"
                   src="/brands/samsung-logo%201-200h.webp"
                   loading="eager"
                   className="frame1196-image46"
@@ -3363,7 +3363,7 @@ const Frame1196 = (props) => {
                 <p className="frame1196-text244">
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: 'Диагностика стоит 200 гривен. При согласии на ремонт стоимость диагоностики засчитывается в общую сумму работ. Выезд мастера бесплатный',
+                      __html: 'Диагностика стоит 300 гривен. При согласии на ремонт стоимость диагоностики засчитывается в общую сумму работ. Выезд мастера бесплатный',
                     }}
                   ></span>
                 </p>
@@ -3650,7 +3650,7 @@ const Frame1196 = (props) => {
               <span className="textITOGI">
                 <span
                   dangerouslySetInnerHTML={{
-                      __html: 'Шум и вибрации — чаще всего износ амортизаторов или по��шипников.',
+                      __html: 'Шум и вибрации — чаще всего износ амортизаторов или подшипников.',
                   }}
                 ></span>
               </span>
@@ -3915,7 +3915,7 @@ const Frame1196 = (props) => {
               className="frame1196-frame10702"
             />
             <p className="frame1196-text278">
-                Очень благодарна мастеру за быстрый ремонт! Стиральная машина перестала сливать воду, я думала придётся покупать новую. Приехали в тот же день, нашли поломку и всё починил�� за час. Теперь работает как новая. Рекомендую!
+                Очень благодарна мастеру за быстрый ремонт! Стиральная машина перестала сливать воду, я думала придётся покупать новую. Приехали в тот же день, нашли поломку и всё починили за час. Теперь работает как новая. Рекомендую!
             </p>
             <svg
               width="330"
