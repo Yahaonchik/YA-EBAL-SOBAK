@@ -40,7 +40,13 @@ const Frame1196 = (props) => {
   const [showAsk, setShowAsk] = useState(false)
   const askRef = React.useRef(null)
 
-  useInView({ selector: '.slide-from-left, .slide-from-right', rootMargin: '0px 0px -40% 0px', threshold: 0, delayPx: 10 })
+  useInView({
+    selector: '.slide-from-left, .slide-from-right',
+    rootMargin: isMobile ? '0px 0px -10% 0px' : '0px 0px -40% 0px',
+    threshold: 0,
+    delayPx: isMobile ? 0 : 10,
+    delayMs: 0,
+  })
 
   const [showItogi, setShowItogi] = useState(false)
   const itogiRef = React.useRef(null)
@@ -273,7 +279,7 @@ const Frame1196 = (props) => {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://remont-stiralok.vercel.app'
   const faqItems = [
     { question: 'Сколько времени занимает ремонт?', answer: '99% поломок устраняем на месте за 30–60 минут. Редкие случаи требуют заказа деталей и повторного визита 1–2 дня.' },
-    { question: 'Какую гарантию вы предоставляете?', answer: 'На все виды работ — 6 месяцев, на заменённые запчасти — 1 год. Гарантийный талон выдаём после ремонта.' },
+    { question: 'Какую гарантию вы предоставляете?', answer: 'На все виды работ — 6 месяцев, на заменённые запчасти — 1 год. Гарантий��ый талон выдаём после ремонта.' },
     { question: 'Сколько стоит диагностика?', answer: 'Диагностика — 200 грн. При согласии на ремонт эта сумма входит в стоимость работ. Выезд мастера бесплатный.' },
     { question: 'Будет ли у мастера нужные детали?', answer: 'Мастер возит базовый набор популярных запчастей. Редкие детали заказываем за 1–2 дня, согласовываем по телефону.' },
     { question: 'Дешевле отремонтировать или заменить?', answer: 'Если стоимость ремонта превышает 60% цены новой машины, выгоднее заменить. Мы честно консультируем по целесообразности.' }
@@ -322,7 +328,7 @@ const Frame1196 = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="frame1196-image15"><Image alt="Стиральная машина не сливает воду" src="/problems 2/11-300h.webp" fill sizes="149px" quality={100} priority loading="eager" style={{ objectFit: 'cover' }} /></div>
+                <div className="frame1196-image15"><Image alt="Стиральна�� машина не сливает воду" src="/problems 2/11-300h.webp" fill sizes="149px" quality={100} priority loading="eager" style={{ objectFit: 'cover' }} /></div>
               </a>
             </Link>
             <Link legacyBehavior href="/negreetvodu">
@@ -1621,7 +1627,7 @@ const Frame1196 = (props) => {
               </div>
               <div className="item">
                 <Image
-                  alt="Ремонт стиральных машин Bosch в Одессе - профессиональный сервис"
+                  alt="Ремон�� стиральных машин Bosch в Одессе - профессиональный сервис"
                   src="/brands/bosch-logo%202-200h.webp"
                   loading="eager"
                   className="frame1196-image34"
@@ -1765,7 +1771,7 @@ const Frame1196 = (props) => {
               </div>
               <div className="item">
                 <Image
-                  alt="Ремонт стиральных машин Samsung в Одессе - профессиональный сервис"
+                  alt="Ремонт стиральных машин Samsung в Одессе - профессиональный се��вис"
                   src="/brands/samsung-logo%201-200h.webp"
                   loading="eager"
                   className="frame1196-image46"
@@ -3644,7 +3650,7 @@ const Frame1196 = (props) => {
               <span className="textITOGI">
                 <span
                   dangerouslySetInnerHTML={{
-                      __html: 'Шум и вибрации — чаще всего износ амортизаторов или подшипников.',
+                      __html: 'Шум и вибрации — чаще всего износ амортизаторов или по��шипников.',
                   }}
                 ></span>
               </span>
@@ -3706,7 +3712,7 @@ const Frame1196 = (props) => {
           </h2>
           <p className="frame1196-text271 textITOGI">
             <span>
-                Сервисный центр "Ваше название" — это современная профессиональная мастерская в Одессе, где выполняются все виды ремонта: от быстрой замены деталей до полного восстановления после серьезных поломок. Мы берёмся за любую технику: от массовых моделей до премиум-сегмента.Выполняем замену амортизаторов, подшипников, сливных насосов, управляющих модулей, датчиков, ТЭНов. Также восстанавливаем герметичность, меняем люки, устраняем вибрации и посторонние шумы. Проводим профилактику и глубокую чистку барабана и бака.Каждый ремонт начинается с диагностики — мастер объясняет, в чём проблема, и предлагает решение. Только после согласования с клиентом мы приступаем к работе. Мы ценим доверие и работаем аккуратно — без спешки и халтуры.
+                Сервисный центр "Ваше название" — это современная профессиональная мастерская в Одессе, где выполняются все виды ремонта: от быстрой замены деталей до полного восстановления после серьезных поломок. Мы берёмся за любую технику: от массовых моделей до премиум-сегмента.Выполняем замену амортизаторов, подшипников, сливных насосов, управляющих модулей, датчиков, ТЭНов. Также восстанавливаем герметичность, меняем люки, устраняем вибрации и посторонние шумы. Проводим профилактику и глубокую чистку барабана и бака.Каждый ремонт начинается с диагностики — мастер объясняет, в чём проблема, и предлагает решение. Только после согласования с клиентом мы приступаем к работе. Мы ценим дове��ие и работаем аккуратно — без спешки и халтуры.
             </span>
           </p>
           <h2 className="textglavitogi">
@@ -3909,7 +3915,7 @@ const Frame1196 = (props) => {
               className="frame1196-frame10702"
             />
             <p className="frame1196-text278">
-                Очень благодарна мастеру за быстрый ремонт! Стиральная машина перестала сливать воду, я думала придётся покупать новую. Приехали в тот же день, нашли поломку и всё починили за час. Теперь работает как новая. Рекомендую!
+                Очень благодарна мастеру за быстрый ремонт! Стиральная машина перестала сливать воду, я думала придётся покупать новую. Приехали в тот же день, нашли поломку и всё починил�� за час. Теперь работает как новая. Рекомендую!
             </p>
             <svg
               width="330"
@@ -11951,7 +11957,7 @@ const Frame1196 = (props) => {
             fill: #4EC8ED !important;
           }
 
-          /* Пр���� нажатии ��а ��сю карточку - стрелка становится голуб��й */
+          /* Пр���� нажатии ���� ��сю карточку - стрелка становится голуб��й */
           .frame1196-container113:active .frame1196-arrow10 svg path,
           .frame1196-container114:active .frame1196-arrow11 svg path,
           .frame1196-container115:active .frame1196-arrow12 svg path,
@@ -12254,6 +12260,10 @@ const Frame1196 = (props) => {
           transform: translateX(0);
           opacity: 1;
         }
+
+        /* Prevent horizontal scroll caused by off-screen animations */
+        :global(html), :global(body) { overflow-x: hidden; }
+        @supports (overflow-x: clip) { :global(html), :global(body) { overflow-x: clip; } }
 
         /* Ensure parent containers don't clip the animated element */
         .frame1196-container100, .frame1196-container111, .frame1196-container160, .frame1196-container162 { overflow: visible !important; }
