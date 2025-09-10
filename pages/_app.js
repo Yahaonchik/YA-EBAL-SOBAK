@@ -64,6 +64,10 @@ export default function MyApp({ Component, pageProps }) {
       )}
       <Component {...pageProps} />
       <SiteTagline />
+      <style jsx global>{`
+        html, body, #__next { width: 100%; max-width: 100%; overflow-x: hidden !important; }
+        @supports (overflow-x: clip) { html, body, #__next { overflow-x: clip !important; } }
+      `}</style>
     </div>
   );
 }
