@@ -17,7 +17,7 @@ const Vikup = (props) => {
   const seoData = getSEOData('/vikup')
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://remont-stiralok.vercel.app'
   const serviceData = getServiceData(
-    'Выкуп б/у стиральнх машин',
+    'Выкуп б/у стираль��х машин',
     'Выкупаем б/у стиральные машины в Одессе дорого. Любые марки и состояние.',
     `${baseUrl}/vikup`
   )
@@ -1540,7 +1540,7 @@ const Vikup = (props) => {
               font-weight: 500;
             }
             .page1-text30 {
-              font-size: 14px;
+              font-size: 13.5px;
               font-style: italic;
               font-family: var(--font-nunito);
             font-weight: 300;
@@ -1550,7 +1550,7 @@ const Vikup = (props) => {
               font-weight: 500;
             }
             .page1-text32 {
-              font-size: 14px;
+              font-size: 13.5px;
               font-style: italic;
               font-family: var(--font-nunito);
             font-weight: 300;
@@ -1562,7 +1562,7 @@ const Vikup = (props) => {
               font-weight: 500;
             }
             .page1-text36 {
-              font-size: 14px;
+              font-size: 13.5px;
             }
             .page1-text31 {
               font-style: normal;
@@ -1620,14 +1620,26 @@ const Vikup = (props) => {
             .page1-text13 {
               width: 100%;
               height: 100%;
-              font-size: 13.5px;
+              font-size: 12.5px;
               padding-left: calc(var(--dl-layout-space-unit) + 6px);
               margin-bottom: var(--dl-layout-space-twounits);
               padding-right: calc(var(--dl-layout-space-unit) + 6px);
             }
             .page1-hero-image {
+              /* On mobile make hero image match the width of the info boxes (about 280px)
+                 so it visually aligns with the "Почему лучше не выбрасывать" container */
+              width: 280px;
+              height: auto;
+              margin-left: auto;
+              margin-right: auto;
+            }
+
+            .page1-image2 {
+              position: static;
               width: 100%;
-              height: 240px;
+              height: auto;
+              object-fit: contain;
+              display: block;
             }
             .page1-container14 {
               margin-top: 0px;

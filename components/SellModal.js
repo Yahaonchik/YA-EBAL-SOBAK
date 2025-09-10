@@ -95,7 +95,7 @@ const SellModal = ({ isOpen, onClose }) => {
               <>
                 <p className="modal-description">
                   Выкуп б/у стиральных машин. Оцениваем справедливо, забираем сами.
-                  Оставьте свои контактные данные и наш менеджер свяжется с вам�� для оценки ва��ей машины.
+                  Оставьте свои контактные данные и наш менеджер свяжется с вами для оценки вашей машины.
                 </p>
                 <form onSubmit={handleSubmit} className="sell-form">
                   <div className="form-group input-with-icon">

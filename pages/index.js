@@ -20,6 +20,7 @@ import AskButton from '../components/AskButton'
     import { getSEOData } from '../utils/seoConfig'
     import { getMainPageStructuredData, getFAQData } from '../utils/structuredData'
     import InlineCTA from '../components/InlineCTA'
+import useInView from '../hooks/useInView'
 import { PHONE_TEL } from '../utils/contacts'
 
 const Frame1196 = (props) => {
@@ -38,6 +39,9 @@ const Frame1196 = (props) => {
   const faqRef = React.useRef(null)
   const [showAsk, setShowAsk] = useState(false)
   const askRef = React.useRef(null)
+
+  useInView({ selector: '.slide-from-left, .slide-from-right', rootMargin: '0px 0px -40% 0px', threshold: 0, delayPx: 10 })
+
   const [showItogi, setShowItogi] = useState(false)
   const itogiRef = React.useRef(null)
   const [showReviews, setShowReviews] = useState(false)
@@ -51,7 +55,7 @@ const Frame1196 = (props) => {
   const [kyivRange, setKyivRange] = useState({ start: 0, end: 0 })
   const router = useRouter()
 
-  // Проверяем, является ли текущая страница страницей проблемы
+  // ��роверяем, является ли текущая стра���ица ��траницей проблемы
   const isProblemPage = router.pathname && (
     router.pathname.includes('NESLIVAETIVODU') ||
     router.pathname.includes('NEGREETIVODU') ||
@@ -509,23 +513,12 @@ const Frame1196 = (props) => {
           </article>
         </section>
         <section className="frame1196-container123">
-          <p className="frame1196-text122">
-            <span className="frame1196-text123">В </span>
-            <span className="frame1196-text124">"Ваше название" </span>
-            <span className="frame1196-text125"></span>
-            <span className="frame1196-text126">
-               мы заботимся о надёжной работе вашей техники во всех уголках
-              Одессы.
-            </span>
+          <p className="frame1196-text122 hero-description">
+            <span className="frame1196-text128"><span className="frame1196-text131-nohover">Профессионально</span> устраняем любые неисправности стиральных машин — от самых простых до самых сложных.</span>
             <br className="frame1196-text127" />
-            <span className="frame1196-text128">
-              Профессионально устраняем любые неисправности стиральных машин —
-              от самых простых до самых сложных.
-            </span>
-            <br className="frame1196-text129" />
             <span className="frame1196-text130">Просто позвоните или </span>
             <span className="frame1196-text131" onClick={openModal}>оставьте заявку</span>
-            <span className="frame1196-text132">, и мы вам перезвоним.</span>
+            <span className="frame1196-text132">, и мы Вам перезвоним.</span>
           </p>
           <div className="frame1196-container124">
             <svg
@@ -1414,7 +1407,7 @@ const Frame1196 = (props) => {
                   <span className="frame1196-text211">18</span>
                 </div>
                 <span className="frame1196-text212">
-                  Замена подшипников (с учетом стоимости подшипников)
+                  Замена подшипников (с учетом стоимость подшипников)
                 </span>
               </div>
               <div className="frame1196-container147">
@@ -1889,7 +1882,7 @@ const Frame1196 = (props) => {
             </h2>
           </div>
           <div className="frame1196-container162">
-            <div className="frame1196-container163">
+            <div className="frame1196-container163 slide-from-left">
               <svg
                 width="10"
                 xmlns="http://www.w3.org/2000/svg"
@@ -2086,7 +2079,7 @@ const Frame1196 = (props) => {
                 ></path>
               </svg>
             </div>
-            <div className="frame1196-container167">
+            <div className="frame1196-container167 slide-from-right">
               <svg
                 width="10"
                 xmlns="http://www.w3.org/2000/svg"
@@ -2283,7 +2276,7 @@ const Frame1196 = (props) => {
                 ></path>
               </svg>
             </div>
-            <div className="frame1196-container171">
+            <div className="frame1196-container171 slide-from-left">
               <svg
                 width="10"
                 xmlns="http://www.w3.org/2000/svg"
@@ -2480,7 +2473,7 @@ const Frame1196 = (props) => {
                 ></path>
               </svg>
             </div>
-            <div className="frame1196-container175">
+            <div className="frame1196-container175 slide-from-right">
               <svg
                 width="10"
                 xmlns="http://www.w3.org/2000/svg"
@@ -2677,7 +2670,7 @@ const Frame1196 = (props) => {
                 ></path>
               </svg>
             </div>
-            <div className="frame1196-container179">
+            <div className="frame1196-container179 slide-from-left">
               <svg
                 width="10"
                 xmlns="http://www.w3.org/2000/svg"
@@ -2800,7 +2793,7 @@ const Frame1196 = (props) => {
                 <p className="frame1196-text227">
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: 'Подтверждаем надёжность ремонта длительным сроком гарантии.',
+                      __html: 'Подтверждаем надежность ремонта длительным сроком гарантии.',
                     }}
                   ></span>
                 </p>
@@ -2881,7 +2874,7 @@ const Frame1196 = (props) => {
             <div className="kyiv-discount-content">
               <div className="kyiv-discount-heading">
                 <h2 className="kyiv-discount-title">Скидка 10% на ремонт</h2>
-                <p className="kyiv-discount-time">с {formatTime(kyivRange.start)} до {formatTime(kyivRange.end)}</p>
+                <p className="kyiv-discount-time">от {formatTime(kyivRange.start)} до {formatTime(kyivRange.end)}</p>
               </div>
               <p className="kyiv-discount-sub">Перезвоним в течение 3 минут</p>
               <form className="kyiv-discount-form" onSubmit={handleDiscountSubmit}>
@@ -3470,7 +3463,7 @@ const Frame1196 = (props) => {
                 <p className="frame1196-text248">
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: 'Если стоимость ремонта превышает 60% от цены новой машшины - лучше заменить. Мы всегда честно консультируем от целесообразности ремонта.',
+                      __html: 'Если стоимость ремонта превышает 60% от цены новой машины - лучше заменить. Мы всегда честно консультируем от целесообразности ремонта.',
                     }}
                   ></span>
                 </p>
@@ -3713,7 +3706,7 @@ const Frame1196 = (props) => {
           </h2>
           <p className="frame1196-text271 textITOGI">
             <span>
-                Сервисный центр "Ваше название" — это современная профессиональная мастерская в Одессе, где выполняются все виды ремонта: от быстрой замены деталей до полного восстановления после серьёзных поломок. Мы берёмся за любую технику: от массовых моделей до премиум-сегмента.Выполняем замену амортизаторов, подшипников, сливных насосов, управляющих модулей, датчиков, ТЭНов. Также восстанавливаем герметичность, меняем люки, устраняем вибрации и посторонние шумы. Проводим профилактику и глубокую чистку барабана и бака.Каждый ремонт начинается с диагностики — мастер объясняет, в чём проблема, и предлагает решение. Только после согласования с клиентом мы приступаем к работе. Мы ценим доверие и работаем аккуратно — без спешки и халтуры.
+                Сервисный центр "Ваше название" — это современная профессиональная мастерская в Одессе, где выполняются все виды ремонта: от быстрой замены деталей до полного восстановления после серьезных поломок. Мы берёмся за любую технику: от массовых моделей до премиум-сегмента.Выполняем замену амортизаторов, подшипников, сливных насосов, управляющих модулей, датчиков, ТЭНов. Также восстанавливаем герметичность, меняем люки, устраняем вибрации и посторонние шумы. Проводим профилактику и глубокую чистку барабана и бака.Каждый ремонт начинается с диагностики — мастер объясняет, в чём проблема, и предлагает решение. Только после согласования с клиентом мы приступаем к работе. Мы ценим доверие и работаем аккуратно — без спешки и халтуры.
             </span>
           </p>
           <h2 className="textglavitogi">
@@ -5155,8 +5148,8 @@ const Frame1196 = (props) => {
               font-size: 16px;
             }
           }
-          .frame1196-text122 {
-            color: rgb(55, 55, 55);
+          .frame1196-text122, .hero-description {
+            color: #333333;
             width: 100%;
             height: auto;
             font-size: 17px;
@@ -5164,8 +5157,8 @@ const Frame1196 = (props) => {
             margin-top: var(--dl-layout-space-fourunits);
             text-align: center;
             font-family: var(--font-nunito);
-            font-weight: 400;
-            line-height: 1.25;
+            font-weight: 300;
+            line-height: normal;
             font-stretch: normal;
             padding-left: var(--dl-layout-space-unit);
             margin-bottom: var(--dl-layout-space-unit);
@@ -5198,6 +5191,14 @@ const Frame1196 = (props) => {
             text-decoration: underline;
             cursor: pointer;
             transition: all 0.3s ease;
+          }
+
+          .frame1196-text131-nohover {
+            color: #87ceeb;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: default;
+            transition: none;
           }
 
           .frame1196-text131:hover {
@@ -5302,8 +5303,8 @@ const Frame1196 = (props) => {
             max-width: 100px;
           }
           .frame1196-text134 {
-            fill: #333333;
-            color: #333333;
+            fill: #222222;
+            color: #222222;
             width: 100%;
             height: auto;
             font-size: 14.5px;
@@ -5366,8 +5367,8 @@ const Frame1196 = (props) => {
             max-width: 100px;
           }
           .frame1196-text136 {
-            fill: #333333;
-            color: #333333;
+            fill: #222222;
+            color: #222222;
             width: 100%;
             height: auto;
             font-size: 14.5px;
@@ -5432,8 +5433,8 @@ const Frame1196 = (props) => {
             max-width: 100px;
           }
           .frame1196-text138 {
-            fill: #333333;
-            color: #333333;
+            fill: #222222;
+            color: #222222;
             width: 100%;
             height: 90px;
             font-size: 14.5px;
@@ -8834,7 +8835,7 @@ const Frame1196 = (props) => {
             text-decoration: none;
           }
 
-          /* Hover �����ф��кты для навигаци���� в футере */
+          /* Hover ������ф��кты для навигаци���� в футере */
           .frame1196-text288:hover,
           .frame1196-text289:hover,
           .frame1196-text290:hover {
@@ -8874,7 +8875,7 @@ const Frame1196 = (props) => {
             position: absolute;
           }
 
-          /* У���ир��ем margin-bottom �� ���лока с з��голо��ком и к����пкой ��о 1618px */
+          /* У���ир��ем margin-bottom �� ���лока с з��г��ло��ком и к����пкой ��о 1618px */
           @media (max-width: 1618px) {
             .frame1196-container112 {
               margin-bottom: 0px;
@@ -9037,8 +9038,8 @@ const Frame1196 = (props) => {
               align-self: center;
             }
             .frame1196-text134 {
-              color: rgba(25, 24, 24, 0.9);
-              font-size: 14.5px;
+              color: #222222;
+              font-size: 14px;
               font-style: italic;
               text-align: center;
               font-family: var(--font-nunito);
@@ -9059,8 +9060,8 @@ const Frame1196 = (props) => {
               align-self: center;
             }
             .frame1196-text136 {
-              color: rgba(25, 24, 24, 0.9);
-              font-size: 14.5px;
+              color: #222222;
+              font-size: 14px;
               font-style: italic;
               text-align: center;
               font-family: var(--font-nunito);
@@ -9087,8 +9088,8 @@ const Frame1196 = (props) => {
               align-self: center;
             }
             .frame1196-text138 {
-              color: rgba(25, 24, 24, 0.85);
-              font-size: 14.5px;
+              color: #222222;
+              font-size: 14px;
               font-style: italic;
               text-align: center;
               font-family: var(--font-nunito);
@@ -11836,7 +11837,7 @@ const Frame1196 = (props) => {
               color: #87ceeb !important;
             }
 
-            /* Активное состоя��ие навига��ии на м��бильн��х */
+            /* Активное состоя��ие навига��ии на м���бильн��х */
             .frame1196-nav-active {
               color: #87ceeb !important;
             }
@@ -11849,7 +11850,7 @@ const Frame1196 = (props) => {
           }
 
 
-          /* Стили для ссы��ок-карточ��������к */
+          /* Стили для ссы��ок-карточ����������к */
           .frame1196-container113,
           .frame1196-container114,
           .frame1196-container115,
@@ -11879,7 +11880,7 @@ const Frame1196 = (props) => {
             box-shadow: 0px 4px 15px 0px rgba(175, 160, 115, 0.4);
           }
 
-          /* Ан��мация ��а��ворачи������������ия и�� центр�� для ответов FAQ */
+          /* Ан��мация ��а��ворачи��������������ия и�� центр�� для ответов FAQ */
           .frame1196-otvet1,
           .frame1196-otvet2,
           .frame1196-otvet3,
@@ -11900,7 +11901,7 @@ const Frame1196 = (props) => {
             padding-bottom: 0 !important;
           }
 
-          /* По����азывать ��ктивные от����е��ы с эффе��то���� разв�����р��чиван��я */
+          /* По�����аз��вать ��ктивные от����е��ы с эффе���то���� разв�����р��чиван��я */
           .frame1196-otvet1.faq-active,
           .frame1196-otvet2.faq-active,
           .frame1196-otvet3.faq-active,
@@ -11913,7 +11914,7 @@ const Frame1196 = (props) => {
           }
 
 
-          /* Ли����������йная а����м��ция д�����я ико����к */
+          /* Ли������������ная а�����м��ция д�������я ико����к */
           .frame1196-icon338,
           .frame1196-icon340,
           .frame1196-icon342,
@@ -11922,7 +11923,7 @@ const Frame1196 = (props) => {
             transition: transform 0.4s linear !important;
           }
 
-          /* Hover ���ффекты для ст����л��к в кар����чках проблем - тол��ко SVG path горит при наведении на карточку */
+          /* Hover ���фф��кты для ст����л��к в кар����чках проблем - тол����ко SVG path горит при наведении на карточку */
           .frame1196-arrow10 svg path,
           .frame1196-arrow11 svg path,
           .frame1196-arrow12 svg path,
@@ -11936,7 +11937,7 @@ const Frame1196 = (props) => {
             transition: fill 0.3s ease;
           }
 
-          /* При наведении н�� всю карточку - стрелка становит��я ��олубой */
+          /* При наведении н�� всю карточку - стрелка становит��я ��олуб��й */
           .frame1196-container113:hover .frame1196-arrow10 svg path,
           .frame1196-container114:hover .frame1196-arrow11 svg path,
           .frame1196-container115:hover .frame1196-arrow12 svg path,
@@ -11964,7 +11965,7 @@ const Frame1196 = (props) => {
             fill: #4EC8ED !important;
           }
 
-          /* Стил�� ��ля к���икабельных кнопо�� */
+          /* Стил�� ��ля к����икабельных кнопо�� */
           .clickable-button {
             cursor: pointer !important;
             transition: all 0.2s ease !important;
@@ -12159,9 +12160,125 @@ const Frame1196 = (props) => {
             .frame1196-text228, .frame1196-text238, .frame1196-text274 { font-size: 19px !important; }
             /* blue section headings */
             .frame1196-text215, .frame1196-text217 { font-size: 19px !important; }
+
+            /* Force specific sizing and color for feature texts on phones */
+            .frame1196-text134,
+            .frame1196-text136,
+            .frame1196-text138,
+            .frame1196-text219,
+            .frame1196-text221,
+            .frame1196-text223,
+            .frame1196-text225,
+            .frame1196-text227 {
+              font-size: 13.5px !important;
+              color: #222222 !important;
+              fill: #222222 !important;
+            }
           }
         `}
       </style>
+
+      <style jsx global>{`
+        @media (max-width: 767px) {
+          .frame1196-text134,
+          .frame1196-text136,
+          .frame1196-text138,
+          .frame1196-text219,
+          .frame1196-text221,
+          .frame1196-text223,
+          .frame1196-text225,
+          .frame1196-text227 {
+            font-size: 13.5px !important;
+            color: #222222 !important;
+            fill: #222222 !important;
+            padding-right: 10px !important;
+            box-sizing: border-box !important;
+            max-width: 100% !important;
+          }
+
+          /* Decrease specific feature texts by 0.5px on phones */
+          .frame1196-text134,
+          .frame1196-text136,
+          .frame1196-text138 {
+            font-size: 13.5px !important;
+          }
+
+          /* Scale decorative SVG dots by 1.3x smaller but keep anchored corners */
+          /* Use center-based scaling so circle centers stay in place */
+          .frame1196-icon128,
+          .frame1196-icon130,
+          .frame1196-icon132,
+          .frame1196-icon134 { transform-origin: center center; transform: scale(0.88462) !important; will-change: transform; }
+
+          /* Tiny nudge if needed to perfectly align dashes into circle centers */
+          .frame1196-icon128 { transform: scale(0.88462) translate(0.5px, 0.5px) !important; }
+          .frame1196-icon130 { transform: scale(0.88462) translate(0.5px, -0.5px) !important; }
+          .frame1196-icon132 { transform: scale(0.88462) translate(-0.5px, -0.5px) !important; }
+          .frame1196-icon134 { transform: scale(0.88462) translate(-0.5px, 0.5px) !important; }
+        }
+        @media (min-width: 768px) {
+          .frame1196-text134,
+          .frame1196-text136,
+          .frame1196-text138 {
+            color: #222222 !important;
+            fill: #222222 !important;
+          }
+        }
+
+        /* Slide-from-left animation: start off-screen to the left */
+        .slide-from-left {
+          /* use percent-based translate so element is positioned relative to its own width */
+          transform: translateX(-110%);
+          opacity: 0;
+          transition: transform 560ms cubic-bezier(.22,.9,.31,1), opacity 420ms ease-out;
+          /* will-change will be applied dynamically to avoid permanent rasterization which blurs text */
+          -webkit-font-smoothing: antialiased;
+          backface-visibility: hidden;
+          text-rendering: optimizeLegibility;
+        }
+        .slide-from-left.in-view {
+          transform: translateX(0);
+          opacity: 1;
+        }
+
+        .slide-from-right {
+          transform: translateX(110%);
+          opacity: 0;
+          transition: transform 560ms cubic-bezier(.22,.9,.31,1), opacity 420ms ease-out;
+          /* will-change will be applied dynamically to avoid permanent rasterization which blurs text */
+          -webkit-font-smoothing: antialiased;
+          backface-visibility: hidden;
+          text-rendering: optimizeLegibility;
+        }
+        .slide-from-right.in-view {
+          transform: translateX(0);
+          opacity: 1;
+        }
+
+        /* Ensure parent containers don't clip the animated element */
+        .frame1196-container100, .frame1196-container111, .frame1196-container160, .frame1196-container162 { overflow: visible !important; }
+        .frame1196-container160, .frame1196-container162 { position: relative !important; }
+
+        @media (prefers-reduced-motion: reduce) {
+          .slide-from-left,
+          .slide-from-left.in-view,
+          .slide-from-right,
+          .slide-from-right.in-view {
+            transition: none !important;
+            transform: none !important;
+            opacity: 1 !important;
+          }
+        }
+
+        /* Reduce vertical spacing between "Почему мы?" header and the features below by 50% */
+        .frame1196-container160 {
+          gap: calc(var(--dl-layout-space-threeunits) / 2) !important;
+        }
+        .frame1196-container161 {
+          margin-bottom: calc(var(--dl-layout-space-fourunits) / 2) !important;
+        }
+      `}</style>
+
     </>
   )
 }
